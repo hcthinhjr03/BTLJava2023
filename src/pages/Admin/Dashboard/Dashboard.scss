@@ -1,0 +1,84 @@
+.dashboard {
+    background-color: #F1F5F9;
+
+    &__section1 {
+        background-color: #6a38ff;
+        height: 200px;
+    }
+
+    &__section2 {
+        margin-top: -100px;
+    }
+
+    &__info {
+        display: flex;
+    }
+
+    &__box {
+        width: calc(100%/4);
+        height: 120px;
+        border-radius: 10px;
+        margin: 20px;
+        background: #fff;
+        box-shadow: 2px 2px #c6c5c5;
+        padding: 15px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    &__title {
+        font-size: 20px;
+        font-weight: 400;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    &__qty {
+        font-size: 45px;    
+    }
+
+    &__wrap {
+        background-color: #fff;
+        margin: 20px;
+        border-radius: 10px;
+    }
+
+    &__table {
+        th {
+            background-color: #F1F5F9;
+            padding: 10px;
+        }
+
+        td {
+            text-align: center;
+            padding: 10px;
+        }
+    }
+
+    &__paginate {
+        ul {
+            padding: 0;
+            list-style: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+          }
+      
+          button {
+            width: 40px;
+            height: 40px;
+            background-color: #fff;
+            color: black;
+            border-radius: 10px;
+            border: 1px solid black;
+            margin: 5px;
+      
+            &:hover {
+              background-color: #6a38ff;
+              transition: all 0.5s;
+            }
+          }
+    }
+}

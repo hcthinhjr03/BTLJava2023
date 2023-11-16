@@ -1,0 +1,141 @@
+.product {
+  &__options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+
+  &__btn {
+    display: flex;
+    align-items: center;
+  }
+
+  &__gift {
+    color: #fff;
+    width: 130px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    font-size: 20px;
+    background: #6a38ff;
+    transition: all 0.5s;
+
+    &:hover {
+      color: #fff;
+      background-color: #6a38ff;
+    }
+  }
+
+  &__cart {
+    color: #6a38ff;
+    width: 130px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    font-size: 20px;
+    border: 1px solid #6a38ff;
+    background: #212529;
+    transition: all 0.5s;
+    margin-left: 10px;
+
+    &:hover {
+      color: #fff;
+      background-color: #6a38ff;
+    }
+  }
+
+  &__list {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  &__item {
+    width: calc(100% / 4);
+    margin-bottom: 20px;
+  }
+
+  &__box {
+    margin: 5px;
+    border: 1px solid #ddd;
+    height: 100%;
+    position: relative;
+    border-radius: 10px;
+  }
+
+  &__image {
+    width: 100%;
+    aspect-ratio: 4/3;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-start-start-radius: 10px;
+    }
+  }
+
+  &__title {
+    text-align: center;
+    padding: 0 10px;
+    color: #fff;
+  }
+
+  &__price-new {
+    padding: 0 17px;
+    font-size: 20px;
+    font-weight: 700;
+    color: #6a38ff;
+  }
+
+  &__price-old {
+    padding: 0 24px;
+    text-decoration: line-through;
+    color: #898787;
+  }
+
+  &__percent {
+    color: #fff;
+    padding: 3px;
+    position: absolute;
+    top: -10px;
+    right: 0;
+    background-color: #6a38ff;
+    height: 20px;
+    width: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    font-size: 14px;
+  }
+
+  &__button {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+
+    button {
+      color: #6a38ff;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 10px;
+      font-size: 20px;
+      border: 1px solid #6a38ff;
+      background: #212529;
+      transition: all 0.5s;
+
+      &:hover {
+        color: #fff;
+        background-color: #6a38ff;
+      }
+    }
+  }
+}

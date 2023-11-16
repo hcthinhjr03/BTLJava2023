@@ -1,0 +1,171 @@
+.detail {
+  &__wrap {
+    color: #fff;
+    margin-top: 50px;
+    padding: 10px;
+  }
+
+  &__title {
+    font-size: 50px;
+    margin-bottom: 10px;
+  }
+
+  &__desc {
+    font-style: italic;
+    font-size: 18px;
+    color: #9a9a9a;
+  }
+
+  &__image {
+    width: 100%;
+    height: 500px;
+    margin-bottom: 20px;
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  &__content {
+    margin-bottom: 20px;
+    font-size: 18px;
+  }
+
+  &__reaction {
+    display: flex;
+    align-items: center;
+  }
+
+  &__info {
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    font-size: 24px;
+  }
+
+  &__button-like {
+    width: 70px;
+    height: 40px;
+    border-radius: 10px;
+    transition: all 0.5s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 10px;
+  }
+
+  &__button-dislike {
+    width: 80px;
+    height: 40px;
+    border-radius: 10px;
+    transition: all 0.5s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__comment {
+    margin-top: 30px;
+
+    &--qty {
+      font-size: 30px;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+    }
+
+    &--info {
+      display: flex;
+      align-items: center;
+    }
+
+    &--avt {
+      margin-right: 10px;
+      width: 50px;
+      height: 50px;
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+
+    &--username {
+      font-size: 20px;
+      font-weight: 700;
+    }
+
+    &--date {
+      margin-left: 15px;
+      font-style: italic;
+      color: #756e6e;
+      
+    }
+
+    &--box {
+      margin-bottom: 20px;
+      border-bottom: 1px solid rgb(133, 130, 130);
+    }
+
+    &--content {
+      padding: 10px;
+      font-size: 18px;
+      margin-left: 50px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    &--del {
+      button {
+        width: 35px;
+        height: 35px;
+        font-size: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 10px;
+        border: 1px solid red;
+        color: red;
+        background-color: #212529;
+        transition: all 0.5s;
+
+        &:hover {
+          background: red;
+          color: white;
+        }
+      }
+    }
+
+    &--input {
+      form {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+      }
+    }
+
+    &--text {
+      border-radius: 10px;
+      padding: 10px;
+      margin-right: 10px;
+    }
+
+    // &--react {
+    //     display: flex;
+    //     align-items: center;
+    // }
+
+    // &--dislike {
+        
+    //     button {
+    //         padding-top: 6px;
+    //         font-size: 20px;
+            
+    //     }
+    // }
+  }
+}

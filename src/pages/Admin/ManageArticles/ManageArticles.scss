@@ -1,0 +1,77 @@
+.articles {
+  padding: 20px;
+
+  &__options {
+    margin-bottom: 20px;
+    text-align: right;
+  }
+
+  &__paginate {
+    ul {
+      padding: 0;
+      list-style: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    button {
+      width: 40px;
+      height: 40px;
+      background-color: #fff;
+      color: black;
+      border-radius: 10px;
+      border: 1px solid black;
+      margin: 5px;
+
+      &:hover {
+        background-color: #6a38ff;
+        transition: all 0.5s;
+      }
+    }
+  }
+
+  &__table {
+    &--header {
+      background-color: #f1f5f9;
+    }
+
+    &--content {
+      height: 600px;
+      border: 1px solid #b7bfc7;
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      table-layout: fixed;
+    }
+
+    th {
+      padding: 20px 15px;
+      text-align: left;
+      font-weight: 500;
+      font-size: 14px;
+      text-transform: uppercase;
+    }
+
+    td {
+      padding: 15px;
+      text-align: left;
+      vertical-align: middle;
+      font-weight: 300;
+      font-size: 14px;
+      border-bottom: 1px solid #b7bfc7;
+    }
+
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    ::-webkit-scrollbar-track,
+    ::-webkit-scrollbar-thumb {
+      background: transparent;
+      box-shadow: inset 0 0 6px #8f8e8e;
+    }
+  }
+}

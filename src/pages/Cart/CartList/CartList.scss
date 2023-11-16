@@ -1,0 +1,156 @@
+.cart {
+  &__deleteall {
+    margin-bottom: 20px;
+
+    button {
+      color: #6a38ff;
+      width: 100px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 10px;
+      font-size: 14px;
+      border: 1px solid #6a38ff;
+      background: #212529;
+      transition: all 0.5s;
+
+      &:hover {
+        color: #fff;
+        background-color: #6a38ff;
+      }
+    }
+  }
+
+  &__item {
+    margin-bottom: 10px;
+    border: 1px solid #a5a5a5;
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border-radius: 10px;
+  }
+
+  &__image {
+    width: 100px;
+    aspect-ratio: 4/3;
+    margin-right: 10px;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  &__content {
+    flex: 1;
+  }
+
+  &__title {
+    color: #fff;
+    margin: 0;
+  }
+
+  &__price-new {
+    font-size: 18px;
+    font-weight: 700;
+    color: #6a38ff;
+  }
+
+  &__price-old {
+    color: #747373;
+    font-size: 14px;
+    text-decoration: line-through;
+  }
+
+  &__quantity {
+    display: flex;
+    align-items: center;
+
+    input {
+      width: 50px;
+      border: 1px solid #6a38ff;
+      height: 28px;
+      border-radius: 5px;
+      text-align: center;
+      margin: 0 5px;
+    }
+
+    span {
+      cursor: pointer;
+      width: 28px;
+      height: 28px;
+      border: 1px solid #6a38ff;
+      border-radius: 10px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+    }
+  }
+
+  &__delete {
+    margin-left: 20px;
+    font-size: 14px;
+    font-weight: 600;
+    color: red;
+    cursor: pointer;
+  }
+
+  &__voucher {
+    margin-top: 20px;
+    text-align: center;
+  }
+
+  &__discount {
+    color: #6a38ff;
+    width: 100px;
+    height: 40px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    font-size: 14px;
+    border: 1px solid #6a38ff;
+    background: #212529;
+    transition: all 0.5s;
+    margin-right: 20px;
+
+  }
+
+  &__total {
+    color: #fff;
+    text-align: right;
+    font-size: 30px;
+    font-weight: 600;
+    border-bottom: 1px solid #fff;
+    padding-bottom: 20px;
+    margin-top: 20px;
+  }
+
+  &__confirm {
+    margin-top: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    button {
+      color: #fff;
+      width: 160px;
+      height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 10px;
+      font-size: 16px;
+      background: #6a38ff;
+      transition: all 0.5s;
+
+      &:hover {
+        color: #fff;
+        background-color: #6a38ff;
+      }
+    }
+  }
+}
