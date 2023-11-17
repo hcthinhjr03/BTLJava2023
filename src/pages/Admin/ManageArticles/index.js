@@ -12,10 +12,13 @@ import {
 } from "../../../services/articlesService";
 import "./ManageArticles.scss";
 import { getNowDate } from "../../../helpers/getNowDate";
+import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 
 function ManageArticles() {
   const [articles, setArticles] = useState([]);
   const [status, setStatus] = useState("");
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchArticle = async () => {
@@ -42,7 +45,16 @@ function ManageArticles() {
 
     const approvedArticle = await updateArticleStatus(articleId, options);
     if (approvedArticle) {
-      alert("Duyệt thành công!");
+      //alert("Duyệt thành công!");
+      Swal.fire({
+        title: 'Duyệt thành công!',
+        icon: 'success',
+        confirmButtonText: 'OK'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          navigate("/private/admin")
+        } 
+      });
     }
   };
 
@@ -54,7 +66,17 @@ function ManageArticles() {
 
     const nonApprovedArticle = await updateArticleStatus(articleId, options);
     if (nonApprovedArticle) {
-      alert("Bỏ duyệt thành công!");
+      //alert("Bỏ duyệt thành công!");
+      Swal.fire({
+        title: 'Bỏ duyệt thành công!',
+        icon: 'success',
+        confirmButtonText: 'OK'
+      }).then((result) => {
+        /* Read more about isConfirmed, isDenied below */
+        if (result.isConfirmed) {
+          navigate("/private/admin")
+        } 
+      });
     }
   };
 
@@ -76,6 +98,11 @@ function ManageArticles() {
     }
 
     if (resultDeleteArticle) {
+      Swal.fire({
+        title: 'Xoá thành công!',
+        icon: 'success',
+        confirmButtonText: 'OK'
+      })
       const updatedArticles = articles.filter(
         (article) => article.id !== articleId
       );

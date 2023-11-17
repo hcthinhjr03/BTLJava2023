@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import Swal from 'sweetalert2'
 import "./article.scss";
 import {
   getApprovedArticle,
@@ -50,7 +51,15 @@ function Article() {
 
   const handleClick = (id) => {
     if (!authen) {
-      navigate("/login");
+      Swal.fire({
+        title: "Bạn phải đăng nhập!",
+        icon: "error",
+        confirmButtonText: "OK",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          navigate("/login");
+        }
+      });
     } else {
       navigate(`/article/${id}`);
     }
@@ -60,12 +69,25 @@ function Article() {
 
   const handleCreate = () => {
     if (!authen) {
-      navigate("/login");
+      Swal.fire({
+        title: "Bạn phải đăng nhập!",
+        icon: "error",
+        confirmButtonText: "OK",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          navigate("/login");
+        }
+      });
     } else {
       if (parseInt(userRole) === 1) {
         navigate("/article/create");
       } else {
-        alert("Bạn chưa đủ điểm để có thể đăng bài");
+        Swal.fire({
+          title: 'Bạn chưa đủ điểm để có thể đăng bài',
+          icon: 'error',
+          confirmButtonText: 'OK'
+        })
+        // alert("Bạn chưa đủ điểm để có thể đăng bài");
       }
     } 
   };

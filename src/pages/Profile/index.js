@@ -5,6 +5,7 @@ import "./profile.scss";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { checkAuthen } from "../../actions/authentication";
+import Swal from "sweetalert2";
 
 function Profile() {
   const id = getCookie("id");
@@ -45,7 +46,12 @@ function Profile() {
   const handleUpdateRole = async (e) => {
     e.preventDefault();
     if (user.score_to_award < 100) {
-      alert("Bạn chưa đủ điểm!");
+      Swal.fire({
+        title: 'Bạn chưa đủ điểm!',
+        icon: 'error',
+        confirmButtonText: 'OK'
+      })
+      //alert("Bạn chưa đủ điểm!");
     } else {
 
       let options = {
@@ -54,8 +60,17 @@ function Profile() {
       const resultOfUpdateRole = await updateUser(user.id, options);
       if(resultOfUpdateRole){
         dispatch(checkAuthen(false));
-        alert("Chúc mừng bạn đã trở thành người đóng góp! Giờ đây bạn có thể đăng bài!")
-        navigate("/login");
+        // alert("Chúc mừng bạn đã trở thành người đóng góp! Giờ đây bạn có thể đăng bài!")
+        Swal.fire({
+          title: 'Chúc mừng bạn đã trở thành người đóng góp! Giờ đây bạn có thể đăng bài! Hãy đăng nhập để đăng bài viết đầu tiên của bạn',
+          icon: 'success',
+          confirmButtonText: 'OK'
+        }).then((result) => {
+          /* Read more about isConfirmed, isDenied below */
+          if (result.isConfirmed) {
+            navigate("/login");
+          } 
+        });
       }
     }
   };

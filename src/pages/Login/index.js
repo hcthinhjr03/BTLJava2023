@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { checkAuthen } from "../../actions/authentication";
 import "./login.scss";
+import Swal from "sweetalert2";
 function Login() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -29,7 +30,12 @@ function Login() {
         navigate("/"); // Redirect to the home page for regular users
       }
     } else {
-      alert("Tài khoản hoặc mật khẩu không chính xác!");
+      // alert("Tài khoản hoặc mật khẩu không chính xác!");
+      Swal.fire({
+        title: 'Tài khoản hoặc mật khẩu không chính xác!',
+        icon: 'error',
+        confirmButtonText: 'OK'
+      })
     }
   };
 

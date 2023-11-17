@@ -7,6 +7,7 @@ import ProductItem from "./ProductItem";
 import { FaShoppingCart, FaGift } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+import Swal from "sweetalert2";
 
 function ProductList() {
   const navigate = useNavigate();
@@ -53,7 +54,15 @@ function ProductList() {
 
   const handleGift = () => {
     if (!authen) {
-      navigate("/login");
+      Swal.fire({
+        title: "Bạn phải đăng nhập!",
+        icon: "error",
+        confirmButtonText: "OK",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          navigate("/login");
+        }
+      });
     } else {
       navigate("/product/gift");
     }
@@ -61,7 +70,15 @@ function ProductList() {
 
   const handleCart = () => {
     if (!authen) {
-      navigate("/login");
+      Swal.fire({
+        title: "Bạn phải đăng nhập!",
+        icon: "error",
+        confirmButtonText: "OK",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          navigate("/login");
+        }
+      });
     } else {
       navigate("/product/cart");
     }
