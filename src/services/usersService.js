@@ -29,15 +29,15 @@ export const updateUser = async (id, options) => {
   return result;
 }
 
-export const updateUserLike = async (userId, options) => {
-  const result = await patch(`users/${userId}`, options);
-  return result;
-}
+// export const updateUserLike = async (userId, options) => {
+//   const result = await patch(`users/${userId}`, options);
+//   return result;
+// }
 
-export const updateUserDislike = async (userId, options) => {
-  const result = await patch(`users/${userId}`, options);
-  return result;
-}
+// export const updateUserDislike = async (userId, options) => {
+//   const result = await patch(`users/${userId}`, options);
+//   return result;
+// }
 
 export const updateScoreToAward = async (id, options) => {
   const result = await patch(`users/${id}`, options);

@@ -13,13 +13,11 @@ import {
   updateArticleLike,
 } from "../../../services/articlesService";
 import "./ArticleDetail.scss";
-//import { FiThumbsUp, FiThumbsDown } from "react-icons/fi";
 import { FaThumbsUp, FaThumbsDown, FaTrashAlt, FaRegCommentDots } from "react-icons/fa";
 import { getCookie } from "../../../helpers/cookie";
 import {
   getUserById,
-  updateUserDislike,
-  updateUserLike,
+  updateUser,
 } from "../../../services/usersService";
 import { getNowDate } from "../../../helpers/getNowDate";
 
@@ -115,10 +113,12 @@ function ArticleDetail() {
 
       const userInfo = await getUserById(detail.userId);
       let newLikeOfUser = userInfo[0].likes - 1;
+      let newScoreOfUser = userInfo[0].score_to_award - 10;
       let option2 = {
         likes: newLikeOfUser,
+        score_to_award: newScoreOfUser
       };
-      const resultOfUser = await updateUserLike(detail.userId, option2);
+      const resultOfUser = await updateUser(detail.userId, option2);
       console.log(resultOfUser);
       //Xoa reaction_article cu
       const thisReaction = await getLikeStatus(userId, id);
@@ -127,6 +127,14 @@ function ArticleDetail() {
         thisReactionId
       );
       console.log(resultOfDeleteReaction);
+
+      const thisUserInfo = await getUserById(userId);
+      let newScoreOfThisUser = thisUserInfo[0].score_to_award - 1;
+      let option4 = {
+        score_to_award: newScoreOfThisUser
+      }
+      const resultOfScore = await updateUser(userId, option4);
+      console.log(resultOfScore);
     }
     //xu li like
     else {
@@ -140,14 +148,15 @@ function ArticleDetail() {
       };
       const resultOfArticle = await updateArticleLike(id, option1);
       console.log(resultOfArticle);
-      //user viet bai nay tang like
+      //user viet bai nay tang like + score
       const userInfo = await getUserById(detail.userId);
       let newLikeOfUser = userInfo[0].likes + 1;
-      console.log(newLikeOfUser);
+      let newScoreOfUser = userInfo[0].score_to_award + 10;
       let option2 = {
         likes: newLikeOfUser,
+        score_to_award: newScoreOfUser
       };
-      const resultOfUser = await updateUserLike(detail.userId, option2);
+      const resultOfUser = await updateUser(detail.userId, option2);
       console.log(resultOfUser);
       //Tao reaction_article moi
       let option3 = {
@@ -157,6 +166,14 @@ function ArticleDetail() {
       };
       const thisReaction = await creatNewArticleReaction(option3);
       console.log(thisReaction);
+      //Nguoi like bai tang score
+      const thisUserInfo = await getUserById(userId);
+      let newScoreOfThisUser = thisUserInfo[0].score_to_award + 1;
+      let option4 = {
+        score_to_award: newScoreOfThisUser
+      }
+      const resultOfScore = await updateUser(userId, option4);
+      console.log(resultOfScore);
     }
   };
 
@@ -177,7 +194,7 @@ function ArticleDetail() {
       let option2 = {
         dislikes: newDislikeOfUser,
       };
-      const resultOfUser = await updateUserDislike(detail.userId, option2);
+      const resultOfUser = await updateUser(detail.userId, option2);
       console.log(resultOfUser);
 
       const thisReaction = await getDislikeStatus(userId, id);
@@ -186,6 +203,13 @@ function ArticleDetail() {
         thisReactionId
       );
       console.log(resultOfDeleteReaction);
+      const thisUserInfo = await getUserById(userId);
+      let newScoreOfThisUser = thisUserInfo[0].score_to_award - 1;
+      let option4 = {
+        score_to_award: newScoreOfThisUser
+      }
+      const resultOfScore = await updateUser(userId, option4);
+      console.log(resultOfScore);
     } else {
       setDislike(dislike + 1);
       setDislikeStatus((prev) => !prev);
@@ -202,7 +226,7 @@ function ArticleDetail() {
       let option2 = {
         dislikes: newDislikeOfUser,
       };
-      const resultOfUser = await updateUserDislike(detail.userId, option2);
+      const resultOfUser = await updateUser(detail.userId, option2);
       console.log(resultOfUser);
 
       let option3 = {
@@ -212,6 +236,13 @@ function ArticleDetail() {
       };
       const thisReaction = await creatNewArticleReaction(option3);
       console.log(thisReaction);
+      const thisUserInfo = await getUserById(userId);
+      let newScoreOfThisUser = thisUserInfo[0].score_to_award + 1;
+      let option4 = {
+        score_to_award: newScoreOfThisUser
+      }
+      const resultOfScore = await updateUser(userId, option4);
+      console.log(resultOfScore);
     }
   };
   const [newComment, setNewComment] = useState({});
@@ -238,6 +269,17 @@ function ArticleDetail() {
       setComments([...comments, resultOfNewComment]);
     };
     fetchApi();
+
+    const updateScoreOfThisUser = async () => {
+      const thisUserInfo = await getUserById(userId);
+      let newScoreOfThisUser = thisUserInfo[0].score_to_award + 2;
+      let option4 = {
+        score_to_award: newScoreOfThisUser
+      }
+      const resultOfScore = await updateUser(userId, option4);
+      console.log(resultOfScore);
+    }
+    updateScoreOfThisUser();
   };
 
   const handleDeleteComment = async (id) => {
@@ -246,6 +288,14 @@ function ArticleDetail() {
       const updatedComments = comments.filter((comment) => comment.id !== id);
       setComments(updatedComments);
     }
+
+    const thisUserInfo = await getUserById(userId);
+      let newScoreOfThisUser = thisUserInfo[0].score_to_award - 2;
+      let option4 = {
+        score_to_award: newScoreOfThisUser
+      }
+      const resultOfScore = await updateUser(userId, option4);
+      console.log(resultOfScore);
   };
 
   return (

@@ -61,11 +61,13 @@ function Article() {
   const handleCreate = () => {
     if (!authen) {
       navigate("/login");
-    } else if (authen && userRole === "1") {
-      navigate("/article/create");
     } else {
-      alert("Bạn chưa đủ likes để có thể đăng bài");
-    }
+      if (parseInt(userRole) === 1) {
+        navigate("/article/create");
+      } else {
+        alert("Bạn chưa đủ điểm để có thể đăng bài");
+      }
+    } 
   };
   return (
     <>

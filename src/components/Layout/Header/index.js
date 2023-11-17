@@ -2,10 +2,12 @@ import { Link, NavLink } from "react-router-dom";
 import "./Header.scss";
 import "../../../SCSS/base.scss";
 import { getCookie } from "../../../helpers/cookie";
+import { useSelector } from "react-redux";
 
 
 function Header() {
   const token = getCookie("token");
+  const authen = useSelector((state) => state.authenReducer);
 
   return (
     <>
@@ -18,7 +20,7 @@ function Header() {
               </div>
               <div className="header__account">
                 <ul>
-                  {token ? (
+                  {token && authen ? (
                     <>
                       <li>
                         <Link to="/profile">Profile</Link>

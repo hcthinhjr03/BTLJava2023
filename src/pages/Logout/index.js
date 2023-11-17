@@ -8,10 +8,11 @@ import { checkAuthen } from "../../actions/authentication";
 function Logout() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  deleteAllCookies();
+  
   useEffect(() => {
     dispatch(checkAuthen(false));
     navigate("/login");
+    deleteAllCookies();
   }, []);
 
   return <></>;

@@ -67,20 +67,21 @@
         font-size: 20px;
       }
 
-      button {
-        margin: 20px 0;
-        border: none;
-        height: 40px;
-        border-radius: 10px;
-        background-color: #6a38ff;
-        color: #fff;
-        &:hover {
-          background-color: #fff;
-          color: #6a38ff;
-          border: 1px solid #6a38ff;
-          transition: all 0.5s;
-        }
-      }
+      
+    }
+  }
+  button {
+    margin: 20px 0;
+    border: none;
+    height: 40px;
+    border-radius: 10px;
+    background-color: #6a38ff;
+    color: #fff;
+    &:hover {
+      background-color: #fff;
+      color: #6a38ff;
+      border: 1px solid #6a38ff;
+      transition: all 0.5s;
     }
   }
 }

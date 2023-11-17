@@ -1,11 +1,17 @@
 import { useEffect, useState } from "react";
 import { getCookie } from "../../helpers/cookie";
 import { getUserById, updateUser } from "../../services/usersService";
-import "./profile.scss"
+import "./profile.scss";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { checkAuthen } from "../../actions/authentication";
 
 function Profile() {
   const id = getCookie("id");
   const [user, setUser] = useState({});
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  //const [role, setRole] = useState(false);
 
   useEffect(() => {
     const fetchApi = async () => {
@@ -15,7 +21,6 @@ function Profile() {
     fetchApi();
   }, [id]);
 
-  console.log(user);
   const handleSubmit = async (e) => {
     //e.preventDefault();
 
@@ -26,16 +31,34 @@ function Profile() {
     const favor_fc = e.target.elements.favor_fc.value;
 
     const options = {
-        address: address,
-        image: image,
-        favor_fc: favor_fc,
-        fullName: fullName,
-        dateOfBirth: dateOfBirth
-    }
+      address: address,
+      image: image,
+      favor_fc: favor_fc,
+      fullName: fullName,
+      dateOfBirth: dateOfBirth,
+    };
 
     const result = await updateUser(id, options);
-    console.log(result)
-  }
+    console.log(result);
+  };
+
+  const handleUpdateRole = async (e) => {
+    e.preventDefault();
+    if (user.score_to_award < 100) {
+      alert("Bạn chưa đủ điểm!");
+    } else {
+
+      let options = {
+        role: 1
+      }
+      const resultOfUpdateRole = await updateUser(user.id, options);
+      if(resultOfUpdateRole){
+        dispatch(checkAuthen(false));
+        alert("Chúc mừng bạn đã trở thành người đóng góp! Giờ đây bạn có thể đăng bài!")
+        navigate("/login");
+      }
+    }
+  };
 
   return (
     <>
@@ -53,45 +76,57 @@ function Profile() {
             </div>
             <div className="profile__name">{user.fullName}</div>
             <div className="profile__dob">{user.dateOfBirth}</div>
-            <div className="profile__gender">Giới tính: {user.gender === 1 ? "Nam" : "Nữ"}</div>
+            <div className="profile__gender">
+              Giới tính: {user.gender === "1" ? "Nam" : "Nữ"}
+            </div>
+            {user.role === 1 ? (
+              <>Người đăng bài</>
+            ) : (
+              <>
+                <form onSubmit={handleUpdateRole} style={{marginTop: "10px", display: "flex", flexDirection: "column", alignItems: "center"}}>
+                  <span>Score: {user.score_to_award}/100</span>
+                  <button style={{marginTop: "5px"}}>Become Writer</button>
+                </form>
+              </>
+            )}
           </div>
           <div className="profile__right">
             <div className="profile__form">
               <form onSubmit={handleSubmit}>
-              <label>Full Name:</label>
+                <label>Full Name:</label>
                 <input
                   className="profile__input"
                   type="text"
                   name="fullName"
-                  placeholder={user.fullName || "none"}
+                  defaultValue={user.fullName}
                 />
                 <label>Date of birth:</label>
                 <input
                   className="profile__input"
                   type="text"
                   name="dateOfBirth"
-                  placeholder={user.dateOfBirth || "none"}
+                  defaultValue={user.dateOfBirth}
                 />
                 <label>Avatar:</label>
                 <input
                   className="profile__input"
                   type="text"
                   name="image"
-                  placeholder={user.image || "none"}
+                  defaultValue={user.image}
                 />
                 <label>Address:</label>
                 <input
                   className="profile__input"
                   type="text"
                   name="address"
-                  placeholder={user.address || "none"}
+                  defaultValue={user.address}
                 />
                 <label>Favorite FC:</label>
                 <input
                   className="profile__input"
                   type="text"
                   name="favor_fc"
-                  placeholder={user.favor_fc || "none"}
+                  defaultValue={user.favor_fc}
                 />
                 <button>Update</button>
               </form>
