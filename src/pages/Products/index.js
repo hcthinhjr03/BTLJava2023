@@ -4,7 +4,7 @@ function Products() {
     return(
         <>
         <div className="product__page">
-                <h2>Danh sách sản phẩm</h2>
+                <h2>Products Available</h2>
                 <ProductList />
         </div>
         </>

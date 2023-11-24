@@ -93,13 +93,13 @@ function Article() {
   };
   return (
     <>
-      <h2>Danh sách bài viết</h2>
+      <h2>Articles</h2>
       <div className="options">
         <button
           className="button button-main button-create"
           onClick={handleCreate}
         >
-          Đăng bài
+          Post
         </button>
         <select
           className="button button-main button-select"
@@ -130,7 +130,7 @@ function Article() {
                   className="button button-main"
                   onClick={() => handleClick(item.id)}
                 >
-                  Xem chi tiết
+                  Details
                 </button>
                 <div className="inner-info">
                   <div className="inner-reaction">

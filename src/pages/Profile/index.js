@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { getCookie } from "../../helpers/cookie";
-import { getUserById, updateUser } from "../../services/usersService";
+import { creatEmail, creatPhone, getEmail, getPhone, getUserById, updateEmail, updatePhone, updateUser } from "../../services/usersService";
 import "./profile.scss";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
@@ -12,7 +12,8 @@ function Profile() {
   const [user, setUser] = useState({});
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  //const [role, setRole] = useState(false);
+  const [email, setEmail] = useState({});
+  const [phone, setPhone] = useState({});
 
   useEffect(() => {
     const fetchApi = async () => {
@@ -22,25 +23,83 @@ function Profile() {
     fetchApi();
   }, [id]);
 
-  const handleSubmit = async (e) => {
-    //e.preventDefault();
+  useEffect(() => {
+    const fetchEmail = async () => {
+      const result = await getEmail(id);
+      setEmail(result[0]);
+    }
+    fetchEmail();
+  }, [id]);
 
-    const fullName = e.target.elements.fullName.value;
-    const dateOfBirth = e.target.elements.dateOfBirth.value;
+  useEffect(() => {
+    const fetchPhone = async () => {
+      const result = await getPhone(id);
+      setPhone(result[0]);
+    }
+    fetchPhone();
+  }, [id]);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
     const address = e.target.elements.address.value;
     const image = e.target.elements.image.value;
     const favor_fc = e.target.elements.favor_fc.value;
+    const newEmail = e.target.elements.email.value;
+    const new_phone_number = e.target.elements.phone_number.value;
+
+    const updateEmailOptions = {
+      email: newEmail
+    }
+
+    const createEmailOptions = {
+      email: newEmail,
+      user_id: parseInt(id)
+    }
+
+    if(email) {
+      const result = await updateEmail(email.id, updateEmailOptions);
+      if(result) {
+        navigate("/");
+      }
+    } else {
+      const result = await creatEmail(createEmailOptions);
+      if(result) {
+        navigate("/");
+      }
+    }
+
+    const updatePhoneOptions = {
+      phone_number: new_phone_number
+    }
+
+    const createPhoneOptions = {
+      phone_number: new_phone_number,
+      user_id: parseInt(id)
+    }
+
+    if(phone) {
+      const result = await updatePhone(phone.id, updatePhoneOptions);
+      if(result) {
+        navigate("/");
+      }
+    } else {
+      const result = await creatPhone(createPhoneOptions);
+      if(result) {
+        navigate("/");
+      }
+    }
 
     const options = {
       address: address,
       image: image,
       favor_fc: favor_fc,
-      fullName: fullName,
-      dateOfBirth: dateOfBirth,
     };
 
     const result = await updateUser(id, options);
-    console.log(result);
+    if(result) {
+      navigate("/");
+    }
   };
 
   const handleUpdateRole = async (e) => {
@@ -108,20 +167,6 @@ function Profile() {
           <div className="profile__right">
             <div className="profile__form">
               <form onSubmit={handleSubmit}>
-                <label>Full Name:</label>
-                <input
-                  className="profile__input"
-                  type="text"
-                  name="fullName"
-                  defaultValue={user.fullName}
-                />
-                <label>Date of birth:</label>
-                <input
-                  className="profile__input"
-                  type="text"
-                  name="dateOfBirth"
-                  defaultValue={user.dateOfBirth}
-                />
                 <label>Avatar:</label>
                 <input
                   className="profile__input"
@@ -135,6 +180,20 @@ function Profile() {
                   type="text"
                   name="address"
                   defaultValue={user.address}
+                />
+                <label>Email:</label>
+                <input
+                  className="profile__input"
+                  type="email"
+                  name="email"
+                  defaultValue={email ? email.email : ""}
+                />
+                <label>Phone number:</label>
+                <input
+                  className="profile__input"
+                  type="text"
+                  name="phone_number"
+                  defaultValue={phone ? phone.phone_number : ""}
                 />
                 <label>Favorite FC:</label>
                 <input

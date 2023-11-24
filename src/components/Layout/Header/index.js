@@ -13,7 +13,7 @@ function Header() {
     <>
       <header className="header">
         <div className="header__top">
-          <div className="container">
+          {/* <div className="container"> */}
             <div className="header__wrap">
               <div className="header__logo">
                 <Link to="/">TEAM12</Link>
@@ -48,7 +48,7 @@ function Header() {
                 </ul>
               </div>
             </div>
-          </div>
+          {/* </div> */}
         </div>
         <div className="header__bot">
           <div className="container">

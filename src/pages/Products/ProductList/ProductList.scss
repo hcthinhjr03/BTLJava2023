@@ -13,7 +13,7 @@
 
   &__gift {
     color: #fff;
-    width: 130px;
+    width: 200px;
     height: 50px;
     display: flex;
     align-items: center;
@@ -24,8 +24,8 @@
     transition: all 0.5s;
 
     &:hover {
-      color: #fff;
-      background-color: #6a38ff;
+      color: #6a38ff;
+      background-color: #fff;
     }
   }
 
@@ -61,7 +61,7 @@
 
   &__box {
     margin: 5px;
-    border: 1px solid #ddd;
+    border: 1px solid #5c5a5a;
     height: 100%;
     position: relative;
     border-radius: 10px;

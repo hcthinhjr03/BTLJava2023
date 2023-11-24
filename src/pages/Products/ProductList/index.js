@@ -104,7 +104,7 @@ function ProductList() {
         <div className="product__btn">
         <button onClick={handleGift} className="product__gift">
           <FaGift />
-          <span style={{ marginLeft: "5px", fontSize: "16px" }}>Đổi thưởng</span>
+          <span style={{ marginLeft: "5px", fontSize: "16px" }}>Change Vouchers</span>
         </button>
         <button onClick={handleCart} className="product__cart">
           <FaShoppingCart />

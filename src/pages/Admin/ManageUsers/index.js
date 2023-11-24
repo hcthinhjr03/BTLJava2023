@@ -1,8 +1,12 @@
 import { useEffect, useState } from "react";
 import {
+  deleteEmail,
+  deletePhone,
   deleteUser,
   getAllUser,
   getCommentsOfUser,
+  getEmail,
+  getPhone,
   getReactionsOfUser,
   getVouchersOfUser,
   updateUser,
@@ -40,6 +44,7 @@ function ManageUsers() {
     setUpdate(true);
   };
 
+  console.log(formData);
   const handleQuitUpdate = () => {
     setUpdate(false);
   };
@@ -78,6 +83,14 @@ function ManageUsers() {
       console.log(delVoucher);
     }
 
+    const getEmailToDelete = await getEmail(userId);
+    const delEmail = await deleteEmail(getEmailToDelete[0].id);
+    console.log(delEmail);
+
+    const getPhoneToDelete = await getPhone(userId);
+    const delPhone = await deletePhone(getPhoneToDelete[0].id);
+    console.log(delPhone);
+
     if (resultDeleteUser) {
       const updatedUsers = users.filter((user) => user.id !== userId);
       setUsers(updatedUsers);
@@ -114,7 +127,7 @@ function ManageUsers() {
               <table>
                 <tbody>
                   {users.map((item) => (
-                    <tr>
+                    <tr key={item.id}>
                       <td>{item.id}</td>
                       <td>
                         {item.role === 2 ? "Quản trị viên" : "Người dùng"}
@@ -211,8 +224,9 @@ function ManageUsers() {
                       <select
                         onChange={handleChange}
                         name="gender"
-                        defaultValue={formData.gender}
+                        // value={formData.gender}
                       >
+                        <option value="def">Select</option>
                         <option value="1">Nam</option>
                         <option value="0">Nữ</option>
                       </select>

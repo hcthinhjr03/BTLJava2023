@@ -65,3 +65,42 @@ export const getVouchersOfUser = async (userId) => {
 }
 
 
+export const creatEmail = async (options) => {
+  const result = await post(`emails`, options);
+  return result;
+}
+
+export const getEmail = async (userId) => {
+  const result = await get(`emails?user_id=${userId}`);
+  return result;
+}
+
+export const updateEmail = async (id, options) => {
+  const result = await patch(`emails/${id}`, options);
+  return result;
+} 
+
+export const deleteEmail = async (id) => {
+  const result = await del(`emails/${id}`);
+  return result;
+}
+
+export const getPhone = async (userId) => {
+  const result = await get(`phone_numbers?user_id=${userId}`);
+  return result;
+}
+
+export const creatPhone = async (options) => {
+  const result = await post(`phone_numbers`, options);
+  return result;
+}
+
+export const updatePhone = async (id, options) => {
+  const result = await patch(`phone_numbers/${id}`, options);
+  return result;
+} 
+
+export const deletePhone = async (id) => {
+  const result = await del(`phone_numbers/${id}`);
+  return result;
+}

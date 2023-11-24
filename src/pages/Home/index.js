@@ -29,7 +29,7 @@ function Home() {
     speed: 500,
     slidesToShow: 3,
     slidesToScroll: 3,
-    autoplay: true
+    autoplay: true,
   };
 
   useEffect(() => {
@@ -62,7 +62,9 @@ function Home() {
   return (
     <>
       <div className="articles">
-        <h1 style={{ color: "#fff" }}>Bài viết nổi bật</h1>
+        <div className="title">
+          <h1 style={{ color: "#fff" }}>- Popular articles -</h1>
+        </div>
         <Slider {...settingsArticle}>
           {currentArticles.map((item) => (
             <div key={item.id}>
@@ -95,7 +97,9 @@ function Home() {
       </div>
 
       <div className="products">
-        <h1 style={{ color: "#fff" }}>Sản phẩm nổi bật</h1>
+        <div className="title">
+        <h1 style={{ color: "#fff" }}>- Best Seller -</h1>
+        </div>
         <Slider {...settingsProduct}>
           {currentProducts.map((item) => (
             <div key={item.id}>
@@ -107,7 +111,6 @@ function Home() {
                   <h3 className="products__title">{item.name}</h3>
                   <div className="products__price-old">{item.price}$</div>
                 </div>
-                <div className="products__percent">-{item.discount}%</div>
               </div>
             </div>
           ))}
