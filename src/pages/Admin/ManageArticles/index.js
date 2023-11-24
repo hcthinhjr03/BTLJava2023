@@ -8,7 +8,7 @@ import {
   getArticleComments,
   getArticleReactions,
   getNonApprovedArticle,
-  updateArticleStatus,
+  updateArticle,
 } from "../../../services/articlesService";
 import "./ManageArticles.scss";
 import { getNowDate } from "../../../helpers/getNowDate";
@@ -43,7 +43,7 @@ function ManageArticles() {
       timeAccept: timeAccept,
     };
 
-    const approvedArticle = await updateArticleStatus(articleId, options);
+    const approvedArticle = await updateArticle(articleId, options);
     if (approvedArticle) {
       //alert("Duyệt thành công!");
       Swal.fire({
@@ -64,7 +64,7 @@ function ManageArticles() {
       timeAccept: "",
     };
 
-    const nonApprovedArticle = await updateArticleStatus(articleId, options);
+    const nonApprovedArticle = await updateArticle(articleId, options);
     if (nonApprovedArticle) {
       //alert("Bỏ duyệt thành công!");
       Swal.fire({

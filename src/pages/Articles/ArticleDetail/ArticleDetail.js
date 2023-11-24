@@ -9,8 +9,7 @@ import {
   getArticleComments,
   getDislikeStatus,
   getLikeStatus,
-  updateArticleDislike,
-  updateArticleLike,
+  updateArticle,
 } from "../../../services/articlesService";
 import "./ArticleDetail.scss";
 import { FaThumbsUp, FaThumbsDown, FaTrashAlt, FaRegCommentDots } from "react-icons/fa";
@@ -108,7 +107,7 @@ function ArticleDetail() {
       let option1 = {
         likes: newLikeValue,
       };
-      const resultOfArticle = await updateArticleLike(id, option1);
+      const resultOfArticle = await updateArticle(id, option1);
       console.log(resultOfArticle);
 
       const userInfo = await getUserById(detail.userId);
@@ -146,7 +145,7 @@ function ArticleDetail() {
       let option1 = {
         likes: newLikeOfArticle,
       };
-      const resultOfArticle = await updateArticleLike(id, option1);
+      const resultOfArticle = await updateArticle(id, option1);
       console.log(resultOfArticle);
       //user viet bai nay tang like + score
       const userInfo = await getUserById(detail.userId);
@@ -186,7 +185,7 @@ function ArticleDetail() {
       let option1 = {
         dislikes: newDislikeValue,
       };
-      const resultOfArticle = await updateArticleDislike(id, option1);
+      const resultOfArticle = await updateArticle(id, option1);
       console.log(resultOfArticle);
 
       const userInfo = await getUserById(detail.userId);
@@ -218,7 +217,7 @@ function ArticleDetail() {
       let option1 = {
         dislikes: newDislikeOfArticle,
       };
-      const resultOfArticle = await updateArticleDislike(id, option1);
+      const resultOfArticle = await updateArticle(id, option1);
       console.log(resultOfArticle);
 
       const userInfo = await getUserById(detail.userId);

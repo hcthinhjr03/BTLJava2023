@@ -45,16 +45,6 @@ export const getDislikeStatus = async (userId, articleId) => {
     return result;
 }
 
-export const updateArticleLike = async (articleId, options) => {
-    const result = await patch(`articles/${articleId}`, options);
-    return result;
-}
-
-export const updateArticleDislike = async (articleId, options) => {
-    const result = await patch(`articles/${articleId}`, options);
-    return result;
-}
-
 export const getArticleReactions = async (articleId) => {
     const result = await get(`reaction_articles?article_id=${articleId}`);
     return result;
@@ -90,7 +80,7 @@ export const deleteArticle = async (id) => {
     return result;
 }
 
-export const updateArticleStatus = async (id, options) => {
+export const updateArticle = async (id, options) => {
     const result = await patch(`articles/${id}`, options);
     return result;
 }
