@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
 import Swal from 'sweetalert2'
+import { useEffect, useState } from "react";
 import "./article.scss";
 import {
   getApprovedArticle,
@@ -109,11 +109,40 @@ function Article() {
           <option def="true" value="default">
             All
           </option>
-          <option value="math">Math</option>
+          {/* <option value="math">Math</option>
           <option value="literature">Literature</option>
           <option value="history">History</option>
           <option value="physics">Physics</option>
-          <option value="biology">Biology</option>
+        <option value="biology">Biology</option> */}
+          
+          <option>V-League</option>
+          <option>Scout cầu thủ trẻ</option>
+          <optgroup label="League">
+            <option>EPL</option>
+            <option>LaLiga</option>
+            <option>Serie A</option>
+            <option>Bundesliga</option>
+            <option>League 1</option>
+            <option>Another</option>
+          </optgroup>
+          <optgroup label="Cup Châu Âu">
+            <option>C1</option>
+            <option>C2</option>
+            <option>C3</option>
+          </optgroup>
+          <optgroup label="Cup Châu Âu">
+            <option>C1</option>
+            <option>C2</option>
+            <option>C3</option>
+          </optgroup>
+          <optgroup label="Đội tuyển quốc gia">
+            <option>Việt Nam</option>
+            <option>Đội tuyển khác</option>
+          </optgroup>
+          <optgroup label="Chuyển nhượng">
+            <option>Bóng đá Việt Nam</option>
+            <option>Bóng đá ngoại</option>
+          </optgroup>
         </select>
       </div>
       {article.length > 0 && (

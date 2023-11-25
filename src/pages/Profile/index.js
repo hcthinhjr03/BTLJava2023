@@ -1,6 +1,15 @@
 import { useEffect, useState } from "react";
 import { getCookie } from "../../helpers/cookie";
-import { creatEmail, creatPhone, getEmail, getPhone, getUserById, updateEmail, updatePhone, updateUser } from "../../services/usersService";
+import {
+  creatEmail,
+  creatPhone,
+  getEmail,
+  getPhone,
+  getUserById,
+  updateEmail,
+  updatePhone,
+  updateUser,
+} from "../../services/usersService";
 import "./profile.scss";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
@@ -27,7 +36,7 @@ function Profile() {
     const fetchEmail = async () => {
       const result = await getEmail(id);
       setEmail(result[0]);
-    }
+    };
     fetchEmail();
   }, [id]);
 
@@ -35,7 +44,7 @@ function Profile() {
     const fetchPhone = async () => {
       const result = await getPhone(id);
       setPhone(result[0]);
-    }
+    };
     fetchPhone();
   }, [id]);
 
@@ -49,43 +58,43 @@ function Profile() {
     const new_phone_number = e.target.elements.phone_number.value;
 
     const updateEmailOptions = {
-      email: newEmail
-    }
+      email: newEmail,
+    };
 
     const createEmailOptions = {
       email: newEmail,
-      user_id: parseInt(id)
-    }
+      user_id: parseInt(id),
+    };
 
-    if(email) {
+    if (email) {
       const result = await updateEmail(email.id, updateEmailOptions);
-      if(result) {
+      if (result) {
         navigate("/");
       }
     } else {
       const result = await creatEmail(createEmailOptions);
-      if(result) {
+      if (result) {
         navigate("/");
       }
     }
 
     const updatePhoneOptions = {
-      phone_number: new_phone_number
-    }
+      phone_number: new_phone_number,
+    };
 
     const createPhoneOptions = {
       phone_number: new_phone_number,
-      user_id: parseInt(id)
-    }
+      user_id: parseInt(id),
+    };
 
-    if(phone) {
+    if (phone) {
       const result = await updatePhone(phone.id, updatePhoneOptions);
-      if(result) {
+      if (result) {
         navigate("/");
       }
     } else {
       const result = await creatPhone(createPhoneOptions);
-      if(result) {
+      if (result) {
         navigate("/");
       }
     }
@@ -97,7 +106,7 @@ function Profile() {
     };
 
     const result = await updateUser(id, options);
-    if(result) {
+    if (result) {
       navigate("/");
     }
   };
@@ -106,29 +115,29 @@ function Profile() {
     e.preventDefault();
     if (user.score_to_award < 100) {
       Swal.fire({
-        title: 'Bạn chưa đủ điểm!',
-        icon: 'error',
-        confirmButtonText: 'OK'
-      })
+        title: "Bạn chưa đủ điểm!",
+        icon: "error",
+        confirmButtonText: "OK",
+      });
       //alert("Bạn chưa đủ điểm!");
     } else {
-
       let options = {
-        role: 1
-      }
+        role: 1,
+      };
       const resultOfUpdateRole = await updateUser(user.id, options);
-      if(resultOfUpdateRole){
+      if (resultOfUpdateRole) {
         dispatch(checkAuthen(false));
         // alert("Chúc mừng bạn đã trở thành người đóng góp! Giờ đây bạn có thể đăng bài!")
         Swal.fire({
-          title: 'Chúc mừng bạn đã trở thành người đóng góp! Giờ đây bạn có thể đăng bài! Hãy đăng nhập để đăng bài viết đầu tiên của bạn',
-          icon: 'success',
-          confirmButtonText: 'OK'
+          title:
+            "Chúc mừng bạn đã trở thành người đóng góp! Giờ đây bạn có thể đăng bài! Hãy đăng nhập để đăng bài viết đầu tiên của bạn",
+          icon: "success",
+          confirmButtonText: "OK",
         }).then((result) => {
           /* Read more about isConfirmed, isDenied below */
           if (result.isConfirmed) {
             navigate("/login");
-          } 
+          }
         });
       }
     }
@@ -157,9 +166,17 @@ function Profile() {
               <>Người đăng bài</>
             ) : (
               <>
-                <form onSubmit={handleUpdateRole} style={{marginTop: "10px", display: "flex", flexDirection: "column", alignItems: "center"}}>
+                <form
+                  onSubmit={handleUpdateRole}
+                  style={{
+                    marginTop: "10px",
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                  }}
+                >
                   <span>Score: {user.score_to_award}/100</span>
-                  <button style={{marginTop: "5px"}}>Become Writer</button>
+                  <button style={{ marginTop: "5px" }}>Become Writer</button>
                 </form>
               </>
             )}
