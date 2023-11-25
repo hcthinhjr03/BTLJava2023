@@ -5,12 +5,17 @@ export const getAllUser = async () => {
   return result;
 }
 
-export const getUser = async (username, password = "") => {
-  let pass = "";
-  if(password !== "") {
-    pass = `&password=${password}`;
-  }
-  const result = await get(`users?username=${username}${pass}`);
+// export const getUser = async (username, password = "") => {
+//   let pass = "";
+//   if(password !== "") {
+//     pass = `&password=${password}`;
+//   }
+//   const result = await get(`users?username=${username}${pass}`);
+//   return result;
+// }
+
+export const getUser = async (options) => {
+  const result = await get(`ProcessLogin`, options);
   return result;
 }
 

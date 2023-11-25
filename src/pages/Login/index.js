@@ -14,7 +14,13 @@ function Login() {
     const username = e.target.elements.username.value;
     const password = e.target.elements.password.value;
 
-    const data = await users.getUser(username, password);
+    const loginOptions = {
+      user_name: username,
+      pass_word: password
+    }
+
+    const data = await users.getUser(loginOptions);
+    console.log(data);
     if (data.length > 0) {
       const time = 1;
       setCookie("id", data[0].id, time);
