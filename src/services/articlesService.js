@@ -5,6 +5,11 @@ export const getArticle = async () => {
     return result;
 }
 
+export const getOutstandingArticle = async () => {
+    const result = await get(`article?featured=true`);
+    return result;
+}
+
 export const getApprovedArticle = async () => {
     const result = await get(`articles?status=1`);
     return result;

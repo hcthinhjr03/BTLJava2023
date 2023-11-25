@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getApprovedArticle } from "../../services/articlesService";
+import { getOutstandingArticle } from "../../services/articlesService";
 import Slider from "react-slick";
 import "./Home.scss";
 import { useNavigate } from "react-router-dom";
@@ -34,7 +34,7 @@ function Home() {
 
   useEffect(() => {
     const fetchOutstandingArticle = async () => {
-      const result = await getApprovedArticle();
+      const result = await getOutstandingArticle();
       setArticles(result);
     };
     fetchOutstandingArticle();
