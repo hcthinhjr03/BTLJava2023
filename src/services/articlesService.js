@@ -11,7 +11,12 @@ export const getOutstandingArticle = async () => {
 }
 
 export const getApprovedArticle = async () => {
-    const result = await get(`articles?status=1`);
+    const result = await get(`article?accepted=true`);
+    return result;
+}
+
+export const getArticleByCategory = async (category) => {
+    const result = await get(`article?category=${category}`);
     return result;
 }
 
@@ -25,10 +30,6 @@ export const getArticleById = async (id) => {
     return result;
 }
 
-export const getArticleByCategory = async (category) => {
-    const result = await get(`articles?category=${category}`);
-    return result;
-}
 
 export const getApprovedArticleByCategory = async (category) => {
     const result = await get(`articles?category=${category}&status=1`);

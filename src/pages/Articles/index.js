@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import "./article.scss";
 import {
   getApprovedArticle,
-  getApprovedArticleByCategory,
+  getArticleByCategory,
 } from "../../services/articlesService";
 import { FaHeart, FaThumbsDown, FaFlag } from "react-icons/fa";
 import "../../SCSS/base.scss";
@@ -29,7 +29,7 @@ function Article() {
         const result = await getApprovedArticle();
         setArticle(result);
       } else {
-        const result = await getApprovedArticleByCategory(category);
+        const result = await getArticleByCategory(category);
         setArticle(result);
       }
     };

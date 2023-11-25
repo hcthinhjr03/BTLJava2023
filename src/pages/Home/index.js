@@ -40,8 +40,6 @@ function Home() {
     fetchOutstandingArticle();
   }, []);
 
-  console.log(articles);
-
   useEffect(() => {
     const fetchOutstandingProducts = async () => {
       const result = await getProductList();
