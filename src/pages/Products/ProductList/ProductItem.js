@@ -14,7 +14,7 @@ function ProductItem(props) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const priceNew = (item.price * ((100 - item.discount) / 100)).toFixed(0);
+  const priceNew = (item.price * ((100 - item.discounted) / 100)).toFixed(0);
 
   const handleAddToCart = () => {
     if (!authen) {
@@ -41,14 +41,14 @@ function ProductItem(props) {
       <div className="product__item">
         <div className="product__box">
           <div className="product__image">
-            <img src={item.thumbnail} alt={item.title} />
+            <img src={item.imagePath} alt={item.product_name} />
           </div>
           <div className="product__content">
-            <h3 className="product__title">{item.name}</h3>
+            <h3 className="product__title">{item.product_name}</h3>
             <div className="product__price-new">{priceNew}$</div>
             <div className="product__price-old">{item.price}$</div>
           </div>
-          <div className="product__percent">-{item.discount}%</div>
+          <div className="product__percent">-{item.discounted}%</div>
           <div className="product__button">
             <button onClick={handleAddToCart}>
               <BsFillCartPlusFill />

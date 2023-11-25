@@ -29,7 +29,7 @@ function ProductList() {
   useEffect(() => {
     const fetchApi = async () => {
       if (category === "" || category === "default") {
-        const result = await getProductList({});
+        const result = await getProductListByCategory({});
         setProducts(result);
       } else {
         const filters = {
