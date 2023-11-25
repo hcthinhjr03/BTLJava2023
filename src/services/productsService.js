@@ -1,12 +1,12 @@
 import { del, get, patch, post } from "../utils/request"
 
-export const getProductList = async () => {
-    const result = await get("/product/index");
+export const getProductList = async (options) => {
+    const result = await post("product/index", options);
     return result;
 }
 
-export const getProductListByCategory = async (category) => {
-  const result = await get(`products?category=${category}`);
+export const getProductListByCategory = async (options) => {
+  const result = await post("product/index", options);
   return result;
 }
 

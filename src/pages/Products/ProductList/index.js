@@ -29,10 +29,19 @@ function ProductList() {
   useEffect(() => {
     const fetchApi = async () => {
       if (category === "" || category === "default") {
-        const result = await getProductList();
+        const result = await getProductList({});
         setProducts(result);
       } else {
-        const result = await getProductListByCategory(category);
+        const filters = {
+          category: -1
+        }
+        if (category === "Ao") {
+          filters.category = 0;
+        }
+        if (category === "Giay") {
+          filters.category = 1;
+        }
+        const result = await getProductListByCategory(filters);
         setProducts(result);
       }
     };
@@ -97,9 +106,8 @@ function ProductList() {
           <option def="true" value="default">
             All
           </option>
-          <option value="smartphones">Smartphones</option>
-          <option value="laptops">Laptops</option>
-          <option value="mens-watches">Mens watches</option>
+          <option value="Ao">Ao</option>
+          <option value="Giay">Giay</option>
         </select>
         <div className="product__btn">
         <button onClick={handleGift} className="product__gift">
