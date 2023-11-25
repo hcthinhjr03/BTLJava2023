@@ -1,4 +1,4 @@
-const API_DOMAIN = "http://localhost:3003/";
+const API_DOMAIN = "http://localhost:8080/BTL-JAVA/";
 
 export const get = async (path, options = {}) => {
   const response = await fetch(API_DOMAIN + path, options);
