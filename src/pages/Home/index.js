@@ -40,6 +40,8 @@ function Home() {
     fetchOutstandingArticle();
   }, []);
 
+  console.log(articles);
+
   useEffect(() => {
     const fetchOutstandingProducts = async () => {
       const result = await getProductList();
@@ -70,7 +72,7 @@ function Home() {
             <div key={item.id}>
               {/* <Link to={`/article/${item.id}`}> */}
               <img src={item.image} alt="" />
-              <h2>{item.name}</h2>
+              <h2>{item.articleName}</h2>
               <div
                 style={{
                   fontSize: "18px",
@@ -79,7 +81,7 @@ function Home() {
                   marginBottom: "10px",
                 }}
               >
-                {item.description}
+                {item.articleDescription}
               </div>
               {/* </Link> */}
             </div>
