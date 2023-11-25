@@ -19,18 +19,19 @@ function Login() {
       pass_word: password
     }
 
+    console.log(loginOptions);
     const data = await users.getUser(loginOptions);
     console.log(data);
-    if (data.length > 0) {
+    if (data.token === "VALID") {
       const time = 1;
-      setCookie("id", data[0].id, time);
-      setCookie("fullName", data[0].fullName, time);
-      setCookie("username", data[0].username, time);
-      setCookie("role", data[0].role, time);
-      setCookie("token", data[0].token, time);
+      setCookie("user_id", data.id, time);
+      setCookie("fullname", data.fullname, time);
+      setCookie("username", data.username, time);
+      setCookie("role", data.role, time);
+      setCookie("token", data.token, time);
       dispatch(checkAuthen(true));
       // navigate("/");
-      if (data[0].role === 2) {
+      if (data.role === 2) {
         navigate("/private/admin"); // Redirect to the admin page
       } else {
         navigate("/"); // Redirect to the home page for regular users

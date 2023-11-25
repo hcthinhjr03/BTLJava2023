@@ -36,6 +36,8 @@ function Article() {
     fetchApi();
   }, [currentPage, category]);
 
+  console.log(article);
+
   const indexOfLastArticle = currentPage * articlesPerPage;
   const indexOfFirstArticle = indexOfLastArticle - articlesPerPage;
   const currentArticles = article.slice(
@@ -153,11 +155,11 @@ function Article() {
                 <img src={item.image} alt="" />
               </div>
               <div className="inner-content">
-                <div className="inner-title">{item.name}</div>
-                <div className="inner-desc">{item.description}</div>
+                <div className="inner-title">{item.articleName}</div>
+                <div className="inner-desc">{item.articleDescription}</div>
                 <button
                   className="button button-main"
-                  onClick={() => handleClick(item.id)}
+                  onClick={() => handleClick(item.articleId)}
                 >
                   Details
                 </button>

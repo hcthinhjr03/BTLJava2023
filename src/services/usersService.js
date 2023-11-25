@@ -15,7 +15,7 @@ export const getAllUser = async () => {
 // }
 
 export const getUser = async (options) => {
-  const result = await get(`ProcessLogin`, options);
+  const result = await post(`ProcessLogin`, options);
   return result;
 }
 

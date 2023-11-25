@@ -1,7 +1,7 @@
 import { del, get, patch, post } from "../utils/request"
 
 export const getProductList = async () => {
-    const result = await get("products");
+    const result = await get("/product/index");
     return result;
 }
 
