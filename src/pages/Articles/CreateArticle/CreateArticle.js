@@ -4,11 +4,10 @@ import "../../../SCSS/base.scss";
 import { creatArticle } from "../../../services/articlesService";
 import { getCookie } from "../../../helpers/cookie";
 import { useNavigate } from "react-router-dom";
-import { getNowDate } from "../../../helpers/getNowDate";
 
 function CreateArticle() {
   const [values, setValues] = useState({});
-  const userId = getCookie("id");
+  const userId = getCookie("user_id");
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -18,20 +17,15 @@ function CreateArticle() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const formattedToday = getNowDate();
 
     let options = {
       ...values,
-      status: 0,
-      likes: 0,
-      dislikes: 0,
-      reports: 0,
       userId: userId,
-      timeSubmit: formattedToday,
-      timeAccept: ""
+
     };
     const fetchApi = async () => {
       const result = await creatArticle(options);
+      console.log(result);
       if (result) {
         setValues({});
         navigate("/article")
@@ -55,7 +49,7 @@ function CreateArticle() {
                   <td>
                     <input
                       className="create__input"
-                      name="name"
+                      name="articleName"
                       type="text"
                       id="title"
                       onChange={handleChange}
@@ -70,15 +64,34 @@ function CreateArticle() {
                     <select
                       onChange={handleChange}
                       className="create__select"
-                      name="category"
+                      name="articleCategory"
                       id="category"
                     >
-                      <option defaultValue="default">Chọn danh mục</option>
-                      <option value="math">Math</option>
-                      <option value="history">History</option>
-                      <option value="biology">Biology</option>
-                      <option value="literature">Literature</option>
-                      <option value="physics">Physics</option>
+                      
+                      <option def="true" value="qa">Q&A</option>
+                      <option value="vleague">V-League</option>
+                      <option value="scout">Scout cầu thủ trẻ</option>
+                      <optgroup label="League">
+                        <option value="epl">EPL</option>
+                        <option value="laliga">LaLiga</option>
+                        <option value="seriea">Serie A</option>
+                        <option value="bundesliga">Bundesliga</option>
+                        <option value="league1">League 1</option>
+                        <option value="other">Another</option>
+                      </optgroup>
+                      <optgroup label="Cup Châu Âu">
+                        <option value="c1">C1</option>
+                        <option value="c2">C2</option>
+                        <option value="c3">C3</option>
+                      </optgroup>
+                      <optgroup label="Đội tuyển quốc gia">
+                        <option value="vn">Việt Nam</option>
+                        <option value="national">Đội tuyển khác</option>
+                      </optgroup>
+                      <optgroup label="Chuyển nhượng">
+                        <option value="transfer_vn">Bóng đá Việt Nam</option>
+                        <option value="transfer">Bóng đá ngoại</option>
+                      </optgroup>
                     </select>
                   </td>
                 </tr>
@@ -98,13 +111,13 @@ function CreateArticle() {
                 </tr>
                 <tr>
                   <td>
-                    <label htmlFor="content">Mô tả</label>
+                    <label htmlFor="articleDescription">Mô tả</label>
                   </td>
                   <td>
                     <textarea
                       className="create__input"
-                      name="description"
-                      id="description"
+                      name="articleDescription"
+                      id="articleDescription"
                       rows={1}
                       onChange={handleChange}
                     ></textarea>

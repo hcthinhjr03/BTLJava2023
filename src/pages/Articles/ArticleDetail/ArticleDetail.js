@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import {
-  creatNewArticleReaction,
   creatNewComment,
+  createNewArticleReaction,
   deleteArticleReaction,
   deleteComment,
   getArticleById,
@@ -14,8 +14,7 @@ import "./ArticleDetail.scss";
 import { FaThumbsUp, FaThumbsDown, FaTrashAlt, FaRegCommentDots } from "react-icons/fa";
 import { getCookie } from "../../../helpers/cookie";
 import {
-  getUserById,
-  updateUser,
+  getUserById, updateDislikeOfUserWriteArticle, updateLikeOfUserWriteArticle, updateThisUserLike
 } from "../../../services/usersService";
 
 function ArticleDetail() {
@@ -119,12 +118,12 @@ function ArticleDetail() {
       // const userInfo = await getUserById(detail.userId);
       // let newLikeOfUser = userInfo[0].likes - 1;
       // let newScoreOfUser = userInfo[0].score_to_award - 10;
-      // let option2 = {
-      //   likes: newLikeOfUser,
-      //   score_to_award: newScoreOfUser
-      // };
-      // const resultOfUser = await updateUser(detail.userId, option2);
-      // console.log(resultOfUser);
+      let option2 = {
+        numberlikes: -1,
+        user_id: detail.userId
+      };
+      const resultOfUser = await updateLikeOfUserWriteArticle(option2);
+      console.log(resultOfUser);
       //Xoa reaction_article cu
       const thisReaction = await getReactionStatus(userId, id);
       let thisReactionId = thisReaction.reactionArticleId;
@@ -133,13 +132,13 @@ function ArticleDetail() {
       );
       console.log(resultOfDeleteReaction);
 
-      // const thisUserInfo = await getUserById(userId);
-      // let newScoreOfThisUser = thisUserInfo[0].score_to_award - 1;
-      // let option4 = {
-      //   score_to_award: newScoreOfThisUser
-      // }
-      // const resultOfScore = await updateUser(userId, option4);
-      // console.log(resultOfScore);
+      
+      let option4 = {
+        user_id: userId,
+        numberlikes: -1
+      }
+      const resultOfScore = await updateThisUserLike(option4);
+      console.log(resultOfScore);
     }
     //xu li like
     else {
@@ -157,32 +156,30 @@ function ArticleDetail() {
       console.log(resultOfArticle);
       //user viet bai nay tang like + score
 
-      // const userInfo = await getUserById(detail.userId);
-      // let newLikeOfUser = userInfo.likes + 1;
-      // let newScoreOfUser = userInfo[0].score_to_award + 10;
-      // let option2 = {
-      //   likes: newLikeOfUser,
-      //   score_to_award: newScoreOfUser
-      // };
-      // const resultOfUser = await updateUser(detail.userId, option2);
-      // console.log(resultOfUser);
+      let option2 = {
+        numberlikes: 1,
+        user_id: detail.userId
+      };
+      console.log(option2);
+      const resultOfUser = await updateLikeOfUserWriteArticle(option2);
+      console.log(resultOfUser);
+      
       //Tao reaction_article moi
       let option3 = {
         userId: userId,
         articleId: id,
         reactionType: true,
       };
-      const thisReaction = await creatNewArticleReaction(option3);
+      const thisReaction = await createNewArticleReaction(option3);
       console.log(thisReaction);
       //Nguoi like bai tang score
 
-      // const thisUserInfo = await getUserById(userId);
-      // let newScoreOfThisUser = thisUserInfo[0].score_to_award + 1;
-      // let option4 = {
-      //   score_to_award: newScoreOfThisUser
-      // }
-      // const resultOfScore = await updateUser(userId, option4);
-      // console.log(resultOfScore);
+      let option4 = {
+        user_id: userId,
+        numberlikes: 1
+      }
+      const resultOfScore = await updateThisUserLike(option4);
+      console.log(resultOfScore);
     }
   };
 
@@ -200,13 +197,12 @@ function ArticleDetail() {
       const resultOfArticle = await updateArticle(option1);
       console.log(resultOfArticle);
 
-      // const userInfo = await getUserById(detail.userId);
-      // let newDislikeOfUser = userInfo[0].dislikes - 1;
-      // let option2 = {
-      //   dislikes: newDislikeOfUser,
-      // };
-      // const resultOfUser = await updateUser(detail.userId, option2);
-      // console.log(resultOfUser);
+      let option2 = {
+        user_id: detail.userId,
+        numberdislikes: -1,
+      };
+      const resultOfUser = await updateDislikeOfUserWriteArticle(option2);
+      console.log(resultOfUser);
 
       const thisReaction = await getReactionStatus(userId, id);
       let thisReactionId = thisReaction.reactionArticleId;
@@ -236,18 +232,19 @@ function ArticleDetail() {
 
       // const userInfo = await getUserById(detail.userId);
       // let newDislikeOfUser = userInfo[0].dislikes + 1;
-      // let option2 = {
-      //   dislikes: newDislikeOfUser,
-      // };
-      // const resultOfUser = await updateUser(detail.userId, option2);
-      // console.log(resultOfUser);
+      let option2 = {
+        user_id: detail.userId,
+        numberdislikes: 1,
+      };
+      const resultOfUser = await updateDislikeOfUserWriteArticle(option2);
+      console.log(resultOfUser);
 
       let option3 = {
         userId: userId,
         articleId: id,
         reactionType: false,
       };
-      const thisReaction = await creatNewArticleReaction(option3);
+      const thisReaction = await createNewArticleReaction(option3);
       console.log(thisReaction);
       // const thisUserInfo = await getUserById(userId);
       // let newScoreOfThisUser = thisUserInfo[0].score_to_award + 1;
@@ -256,6 +253,7 @@ function ArticleDetail() {
       // }
       // const resultOfScore = await updateUser(userId, option4);
       // console.log(resultOfScore);
+
     }
   };
   const [newComment, setNewComment] = useState({});
@@ -281,6 +279,20 @@ function ArticleDetail() {
     };
     fetchApi();
 
+    let optionScore = {
+      user_id: userId,
+      numberlikes: 2
+    }
+
+    const updateScore = async () => {
+      const resultOfScore = await updateThisUserLike(optionScore);
+      console.log(resultOfScore);
+    }
+
+    updateScore();
+    // const resultOfScore = await updateThisUserLike(option4);
+    // console.log(resultOfScore);
+    
     // const updateScoreOfThisUser = async () => {
     //   const thisUserInfo = await getUserById(userId);
     //   let newScoreOfThisUser = thisUserInfo[0].score_to_award + 2;
@@ -303,11 +315,12 @@ function ArticleDetail() {
 
     // const thisUserInfo = await getUserById(userId);
     //   let newScoreOfThisUser = thisUserInfo[0].score_to_award - 2;
-    //   let option4 = {
-    //     score_to_award: newScoreOfThisUser
-    //   }
-    //   const resultOfScore = await updateUser(userId, option4);
-    //   console.log(resultOfScore);
+      let optionScore = {
+        user_id: userId,
+        numberlikes: -2
+      }
+      const resultOfScore = await updateThisUserLike(optionScore);
+      console.log(resultOfScore);
   };
 
   return (

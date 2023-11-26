@@ -1,7 +1,7 @@
 import { del, get, patch, post } from "../utils/request";
 
 export const getArticle = async () => {
-    const result = await get(`articles`);
+    const result = await get(`article`);
     return result;
 }
 
@@ -20,8 +20,8 @@ export const getArticleByCategory = async (category) => {
     return result;
 }
 
-export const getNonApprovedArticle = async () => {
-    const result = await get(`articles?status=0`);
+export const getNonApprovedArticle = async (userId) => {
+    const result = await get(`article?uncensored=true&userId=${userId}`);
     return result;
 }
 
@@ -37,7 +37,7 @@ export const getApprovedArticleByCategory = async (category) => {
 }
 
 export const creatArticle = async (options) => {
-    const result = await post(`articles`, options);
+    const result = await post(`article`, options);
     return result;
 }
 
@@ -56,7 +56,7 @@ export const getArticleReactions = async (articleId) => {
     return result;
 }
 
-export const creatNewArticleReaction = async (options) => {
+export const createNewArticleReaction = async (options) => {
     const result = await post(`reaction_article`, options);
     return result;
 }
@@ -81,8 +81,19 @@ export const deleteComment = async (userId, commentId) => {
     return result;
 }
 
-export const deleteArticle = async (id) => {
-    const result = await del(`articles/${id}`);
+export const deleteAllCommentsOfArticle = async (articleId) => {
+    const result = await del(`comment?byArticle=true&articleId=${articleId}`);
+    return result;
+}
+
+
+export const deleteAllReactionsOfArticle = async (articleId) => {
+    const result = await del(`reaction_article?articleId=${articleId}`);
+    return result;
+}
+
+export const deleteArticle = async (userId, articleId) => {
+    const result = await del(`article?userId=${userId}&articleId=${articleId}`);
     return result;
 }
 

@@ -1,21 +1,20 @@
 import { useEffect, useState } from "react";
 import {
+  deleteAllCommentsOfArticle,
+  deleteAllReactionsOfArticle,
   deleteArticle,
-  deleteArticleReaction,
-  deleteComment,
   getApprovedArticle,
   getArticle,
-  getArticleComments,
-  getArticleReactions,
   getNonApprovedArticle,
   updateArticle,
 } from "../../../services/articlesService";
 import "./ManageArticles.scss";
-import { getNowDate } from "../../../helpers/getNowDate";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
+import { getCookie } from "../../../helpers/cookie";
 
 function ManageArticles() {
+  const userId = getCookie("user_id");
   const [articles, setArticles] = useState([]);
   const [status, setStatus] = useState("");
   const navigate = useNavigate();
@@ -29,21 +28,21 @@ function ManageArticles() {
         const result = await getApprovedArticle();
         setArticles(result);
       } else if (status === "non-approved") {
-        const result = await getNonApprovedArticle();
+        const result = await getNonApprovedArticle(userId);
         setArticles(result);
       }
     };
     fetchArticle();
-  }, [status]);
+  }, [status, userId]);
 
   const handleApprove = async (articleId) => {
-    const timeAccept = getNowDate();
+
     let options = {
-      status: 1,
-      timeAccept: timeAccept,
+      stt: true,
+      articleId: articleId
     };
 
-    const approvedArticle = await updateArticle(articleId, options);
+    const approvedArticle = await updateArticle(options);
     if (approvedArticle) {
       //alert("Duyệt thành công!");
       Swal.fire({
@@ -60,11 +59,11 @@ function ManageArticles() {
 
   const handleCancelApprove = async (articleId) => {
     let options = {
-      status: 0,
-      timeAccept: "",
+      stt: false,
+      articleId: articleId
     };
 
-    const nonApprovedArticle = await updateArticle(articleId, options);
+    const nonApprovedArticle = await updateArticle(options);
     if (nonApprovedArticle) {
       //alert("Bỏ duyệt thành công!");
       Swal.fire({
@@ -81,32 +80,38 @@ function ManageArticles() {
   };
 
   const handleDelete = async (articleId) => {
-    const resultDeleteArticle = await deleteArticle(articleId);
+    
+    const deleteAllComments = await deleteAllCommentsOfArticle(articleId);
+    console.log(deleteAllComments);
 
-    const getCommentsToDelete = await getArticleComments(articleId);
-    for (let i = 0; i < getCommentsToDelete.length; i++) {
-      const delComment = await deleteComment(getCommentsToDelete[i].id);
-      console.log(delComment);
-    }
+    const deleteAllReactions = await deleteAllReactionsOfArticle(articleId);
+    console.log(deleteAllReactions);
+    
+    const resultDeleteArticle = await deleteArticle(userId, articleId);
+    // for (let i = 0; i < getCommentsToDelete.length; i++) {
+    //   const delComment = await deleteComment(getCommentsToDelete[i].id);
+    //   console.log(delComment);
+    // }
 
-    const getReactionsToDelete = await getArticleReactions(articleId);
-    for (let i = 0; i < getReactionsToDelete.length; i++) {
-      const delReaction = await deleteArticleReaction(
-        getReactionsToDelete[i].id
-      );
-      console.log(delReaction);
-    }
+
+    // const getReactionsToDelete = await getArticleReactions(articleId);
+    // for (let i = 0; i < getReactionsToDelete.length; i++) {
+    //   const delReaction = await deleteArticleReaction(
+    //     getReactionsToDelete[i].id
+    //   );
+    //   console.log(delReaction);
+    // }
 
     if (resultDeleteArticle) {
       Swal.fire({
         title: 'Xoá thành công!',
         icon: 'success',
         confirmButtonText: 'OK'
-      })
-      const updatedArticles = articles.filter(
-        (article) => article.id !== articleId
-      );
-      setArticles(updatedArticles);
+      }).then((result) => {
+        if (result.isConfirmed) {
+          navigate("/private/admin")
+        } 
+      });
     }
   };
 
@@ -147,18 +152,18 @@ function ManageArticles() {
             <table>
               <tbody>
                 {articles.map((item) => (
-                  <tr key={item.id}>
-                    <td className="articles__id">{item.id}</td>
-                    <td className="articles__name">{item.name}</td>
-                    <td className="articles__desc">{item.description}</td>
+                  <tr key={item.articleId}>
+                    <td className="articles__id">{item.articleId}</td>
+                    <td className="articles__name">{item.articleName}</td>
+                    <td className="articles__desc">{item.articleDescription}</td>
                     <td className="articles__timesubmit">{item.timeSubmit}</td>
                     <td className="articles__status">
-                      {item.status === 0 ? "Chưa duyệt" : "Đã duyệt"}
+                      {item.stt === false ? "Chưa duyệt" : "Đã duyệt"}
                     </td>
-                    {item.status === 0 ? (
+                    {item.stt === false ? (
                       <>
                         <td>
-                          <button onClick={() => handleApprove(item.id)}>
+                          <button onClick={() => handleApprove(item.articleId)}>
                             Duyệt
                           </button>
                         </td>
@@ -166,14 +171,14 @@ function ManageArticles() {
                     ) : (
                       <>
                         <td>
-                          <button onClick={() => handleCancelApprove(item.id)}>
+                          <button onClick={() => handleCancelApprove(item.articleId)}>
                             Bỏ Duyệt
                           </button>
                         </td>
                       </>
                     )}
                     <td>
-                      <button onClick={() => handleDelete(item.id)}>Xoá</button>
+                      <button onClick={() => handleDelete(item.articleId)}>Xoá</button>
                     </td>
                   </tr>
                 ))}
