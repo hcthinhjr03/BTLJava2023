@@ -36,7 +36,7 @@ export const getVoucher = async () => {
 }
 
 export const createProduct = async (options) => {
-  const result = await post(`products`, options);
+  const result = await post(`product/addProduct`, options);
   return result;
 }
 

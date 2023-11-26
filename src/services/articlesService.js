@@ -26,7 +26,7 @@ export const getNonApprovedArticle = async () => {
 }
 
 export const getArticleById = async (id) => {
-    const result = await get(`articles?id=${id}`);
+    const result = await get(`article?id=${id}`);
     return result;
 }
 
@@ -41,15 +41,15 @@ export const creatArticle = async (options) => {
     return result;
 }
 
-export const getLikeStatus = async (userId, articleId) => {
-    const result = await get(`reaction_articles?user_id=${userId}&article_id=${articleId}&reaction_type=1`);
+export const getReactionStatus = async (userId, articleId) => {
+    const result = await get(`reaction_article?articleId=${articleId}&userId=${userId}`);
     return result;
 }
 
-export const getDislikeStatus = async (userId, articleId) => {
-    const result = await get(`reaction_articles?user_id=${userId}&article_id=${articleId}&reaction_type=2`);
-    return result;
-}
+// export const getDislikeStatus = async (userId, articleId) => {
+//     const result = await get(`reaction_articles?user_id=${userId}&article_id=${articleId}&reaction_type=2`);
+//     return result;
+// }
 
 export const getArticleReactions = async (articleId) => {
     const result = await get(`reaction_articles?article_id=${articleId}`);
@@ -57,27 +57,27 @@ export const getArticleReactions = async (articleId) => {
 }
 
 export const creatNewArticleReaction = async (options) => {
-    const result = await post(`reaction_articles`, options);
+    const result = await post(`reaction_article`, options);
     return result;
 }
 
 export const deleteArticleReaction = async (id) => {
-    const result = await del(`reaction_articles/${id}`);
+    const result = await del(`reaction_article?reactionArticleId=${id}`);
     return result;
 }
 
 export const getArticleComments = async (id) => {
-    const result = await get(`comments?article_id=${id}`);
+    const result = await get(`comment?articleId=${id}&sortBy=newest`);
     return result;
 }
 
 export const creatNewComment = async (options) => {
-    const result = await post(`comments`, options);
+    const result = await post(`comment`, options);
     return result;
 }
 
-export const deleteComment = async (id) => {
-    const result = await del(`comments/${id}`);
+export const deleteComment = async (userId, commentId) => {
+    const result = await del(`comment?userId=${userId}&commentId=${commentId}`);
     return result;
 }
 
@@ -86,7 +86,8 @@ export const deleteArticle = async (id) => {
     return result;
 }
 
-export const updateArticle = async (id, options) => {
-    const result = await patch(`articles/${id}`, options);
+export const updateArticle = async (options) => {
+    const result = await patch(`article`, options);
     return result;
 }
+

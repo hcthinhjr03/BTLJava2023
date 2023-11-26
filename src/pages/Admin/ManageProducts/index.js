@@ -46,9 +46,16 @@ function ManageProducts() {
       sold: 0,
     };
 
+
     const creatNewProduct = async () => {
       const result = await createProduct(options);
       if (result) {
+        if (result.category) {
+          result.category = "Giay";
+        }
+        else {
+          result.category = "Ao";
+        }
         setProducts([...products, result]);
         setValues({});
         setCreate(false);
@@ -107,6 +114,7 @@ function ManageProducts() {
                     <th>Name</th>
                     <th>Category</th>
                     <th>Price</th>
+                    <th>Team</th>
                     <th>Discount</th>
                     <th>Sold</th>
                     <th>Update</th>
@@ -120,11 +128,12 @@ function ManageProducts() {
                 <tbody>
                   {products.map((item) => (
                     <tr key={item.id}>
-                      <td>{item.id}</td>
-                      <td>{item.name}</td>
-                      <td>{item.category}</td>
+                      <td>{item.product_id}</td>
+                      <td>{item.product_name}</td>
+                      <td>{item.category ? "Giay" : "Ao"}</td>
                       <td>{item.price}</td>
-                      <td>{item.discount}</td>
+                      <td>{item.team}</td>
+                      <td>{item.discounted}</td>
                       <td>{item.sold}</td>
                       <td>
                         <button onClick={() => handleOpenUpdate(item)}>
@@ -166,7 +175,7 @@ function ManageProducts() {
                   <tr>
                     <td>Name:</td>
                     <td>
-                      <input onChange={handleChange} type="text" name="name" />
+                      <input onChange={handleChange} type="text" name="product_name" />
                     </td>
                   </tr>
                   <tr>
@@ -175,7 +184,7 @@ function ManageProducts() {
                       <input
                         onChange={handleChange}
                         type="text"
-                        name="thumbnail"
+                        name="imagePath"
                       />
                     </td>
                   </tr>
@@ -184,9 +193,8 @@ function ManageProducts() {
                     <td>
                       <select onChange={handleChange} name="category">
                         <option defaultValue="default">Chọn danh mục</option>
-                        <option value="smartphones">Smartphones</option>
-                        <option value="laptops">Laptops</option>
-                        <option value="mens-watches">Mens watches</option>
+                        <option value="0">Ao</option>
+                        <option value="1">Giay</option>
                       </select>
                     </td>
                   </tr>
@@ -197,12 +205,18 @@ function ManageProducts() {
                     </td>
                   </tr>
                   <tr>
+                    <td>Team:</td>
+                    <td>
+                      <input onChange={handleChange} type="text" name="team" />
+                    </td>
+                  </tr>
+                  <tr>
                     <td>Discount:</td>
                     <td>
                       <input
                         onChange={handleChange}
                         type="text"
-                        name="discount"
+                        name="discounted"
                       />
                     </td>
                   </tr>
@@ -276,6 +290,17 @@ function ManageProducts() {
                         type="text"
                         name="price"
                         defaultValue={formData.price}
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Team:</td>
+                    <td>
+                      <input
+                        onChange={handleChange}
+                        type="text"
+                        name="team"
+                        defaultValue={formData.team}
                       />
                     </td>
                   </tr>

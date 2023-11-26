@@ -7,8 +7,7 @@ import {
   deleteComment,
   getArticleById,
   getArticleComments,
-  getDislikeStatus,
-  getLikeStatus,
+  getReactionStatus,
   updateArticle,
 } from "../../../services/articlesService";
 import "./ArticleDetail.scss";
@@ -18,12 +17,11 @@ import {
   getUserById,
   updateUser,
 } from "../../../services/usersService";
-import { getNowDate } from "../../../helpers/getNowDate";
 
 function ArticleDetail() {
   const { id } = useParams();
 
-  const userId = getCookie("id");
+  const userId = getCookie("user_id");
   const [detail, setDetail] = useState({});
   const [like, setLike] = useState();
   const [likeStatus, setLikeStatus] = useState(false);
@@ -34,28 +32,32 @@ function ArticleDetail() {
   useEffect(() => {
     const fetchApi = async () => {
       const result = await getArticleById(id);
-      setDetail(result[0]);
-      setLike(result[0].likes);
-      setDislike(result[0].dislikes);
+      setDetail(result);
+      setLike(result.likes);
+      setDislike(result.dislikes);
     };
     fetchApi();
   }, [id]);
 
   useEffect(() => {
     const fetchApi = async () => {
-      const resultOfLike = await getLikeStatus(userId, id);
-      if (resultOfLike.length > 0) {
-        setLikeStatus(true);
-      } else {
-        setLikeStatus(false);
+      const resultOfReaction = await getReactionStatus(userId, id);
+      console.log(resultOfReaction);
+      if(resultOfReaction){
+        if (resultOfReaction.reaction_type) {
+          setLikeStatus(true);
+          setDislikeStatus(false);
+        } else {
+          setDislikeStatus(true);
+          setLikeStatus(false);
+        }
       }
-
-      const resultOfDislike = await getDislikeStatus(userId, id);
-      if (resultOfDislike.length > 0) {
-        setDislikeStatus(true);
-      } else {
-        setDislikeStatus(false);
-      }
+      // const resultOfDislike = await getDislikeStatus(userId, id);
+      // if (resultOfDislike.length > 0) {
+      //   setDislikeStatus(true);
+      // } else {
+      //   setDislikeStatus(false);
+      // }
     };
     fetchApi();
   }, [userId, id]);
@@ -63,6 +65,7 @@ function ArticleDetail() {
   useEffect(() => {
     const fetchApi = async () => {
       const resultOfComments = await getArticleComments(id);
+      console.log(resultOfComments);
       setComments(resultOfComments);
     };
     fetchApi();
@@ -86,10 +89,11 @@ function ArticleDetail() {
     const fetchUserForComments = async () => {
       const commentsWithUsers = await Promise.all(
         comments.map(async (comment) => {
-          const userData = await getUserById(comment.user_id);
-          return { ...comment, user: userData[0] };
+          const userData = await getUserById(comment.userId);
+          return { ...comment, user: userData };
         })
       );
+      console.log(commentsWithUsers);
       setUserComment(commentsWithUsers);
     };
 
@@ -105,35 +109,37 @@ function ArticleDetail() {
 
       let newLikeValue = like - 1;
       let option1 = {
+        articleId: id,
         likes: newLikeValue,
+        dislikes: dislike
       };
-      const resultOfArticle = await updateArticle(id, option1);
+      const resultOfArticle = await updateArticle(option1);
       console.log(resultOfArticle);
 
-      const userInfo = await getUserById(detail.userId);
-      let newLikeOfUser = userInfo[0].likes - 1;
-      let newScoreOfUser = userInfo[0].score_to_award - 10;
-      let option2 = {
-        likes: newLikeOfUser,
-        score_to_award: newScoreOfUser
-      };
-      const resultOfUser = await updateUser(detail.userId, option2);
-      console.log(resultOfUser);
+      // const userInfo = await getUserById(detail.userId);
+      // let newLikeOfUser = userInfo[0].likes - 1;
+      // let newScoreOfUser = userInfo[0].score_to_award - 10;
+      // let option2 = {
+      //   likes: newLikeOfUser,
+      //   score_to_award: newScoreOfUser
+      // };
+      // const resultOfUser = await updateUser(detail.userId, option2);
+      // console.log(resultOfUser);
       //Xoa reaction_article cu
-      const thisReaction = await getLikeStatus(userId, id);
-      let thisReactionId = thisReaction[0].id;
+      const thisReaction = await getReactionStatus(userId, id);
+      let thisReactionId = thisReaction.reactionArticleId;
       const resultOfDeleteReaction = await deleteArticleReaction(
         thisReactionId
       );
       console.log(resultOfDeleteReaction);
 
-      const thisUserInfo = await getUserById(userId);
-      let newScoreOfThisUser = thisUserInfo[0].score_to_award - 1;
-      let option4 = {
-        score_to_award: newScoreOfThisUser
-      }
-      const resultOfScore = await updateUser(userId, option4);
-      console.log(resultOfScore);
+      // const thisUserInfo = await getUserById(userId);
+      // let newScoreOfThisUser = thisUserInfo[0].score_to_award - 1;
+      // let option4 = {
+      //   score_to_award: newScoreOfThisUser
+      // }
+      // const resultOfScore = await updateUser(userId, option4);
+      // console.log(resultOfScore);
     }
     //xu li like
     else {
@@ -143,36 +149,40 @@ function ArticleDetail() {
       //bai nay tang like
       let newLikeOfArticle = like + 1;
       let option1 = {
+        articleId: id,
         likes: newLikeOfArticle,
+        dislikes: dislike
       };
-      const resultOfArticle = await updateArticle(id, option1);
+      const resultOfArticle = await updateArticle(option1);
       console.log(resultOfArticle);
       //user viet bai nay tang like + score
-      const userInfo = await getUserById(detail.userId);
-      let newLikeOfUser = userInfo[0].likes + 1;
-      let newScoreOfUser = userInfo[0].score_to_award + 10;
-      let option2 = {
-        likes: newLikeOfUser,
-        score_to_award: newScoreOfUser
-      };
-      const resultOfUser = await updateUser(detail.userId, option2);
-      console.log(resultOfUser);
+
+      // const userInfo = await getUserById(detail.userId);
+      // let newLikeOfUser = userInfo.likes + 1;
+      // let newScoreOfUser = userInfo[0].score_to_award + 10;
+      // let option2 = {
+      //   likes: newLikeOfUser,
+      //   score_to_award: newScoreOfUser
+      // };
+      // const resultOfUser = await updateUser(detail.userId, option2);
+      // console.log(resultOfUser);
       //Tao reaction_article moi
       let option3 = {
-        user_id: parseInt(userId),
-        article_id: parseInt(id),
-        reaction_type: 1,
+        userId: userId,
+        articleId: id,
+        reactionType: true,
       };
       const thisReaction = await creatNewArticleReaction(option3);
       console.log(thisReaction);
       //Nguoi like bai tang score
-      const thisUserInfo = await getUserById(userId);
-      let newScoreOfThisUser = thisUserInfo[0].score_to_award + 1;
-      let option4 = {
-        score_to_award: newScoreOfThisUser
-      }
-      const resultOfScore = await updateUser(userId, option4);
-      console.log(resultOfScore);
+
+      // const thisUserInfo = await getUserById(userId);
+      // let newScoreOfThisUser = thisUserInfo[0].score_to_award + 1;
+      // let option4 = {
+      //   score_to_award: newScoreOfThisUser
+      // }
+      // const resultOfScore = await updateUser(userId, option4);
+      // console.log(resultOfScore);
     }
   };
 
@@ -183,65 +193,69 @@ function ArticleDetail() {
 
       let newDislikeValue = dislike - 1;
       let option1 = {
+        articleId: id,
+        likes: like,
         dislikes: newDislikeValue,
       };
-      const resultOfArticle = await updateArticle(id, option1);
+      const resultOfArticle = await updateArticle(option1);
       console.log(resultOfArticle);
 
-      const userInfo = await getUserById(detail.userId);
-      let newDislikeOfUser = userInfo[0].dislikes - 1;
-      let option2 = {
-        dislikes: newDislikeOfUser,
-      };
-      const resultOfUser = await updateUser(detail.userId, option2);
-      console.log(resultOfUser);
+      // const userInfo = await getUserById(detail.userId);
+      // let newDislikeOfUser = userInfo[0].dislikes - 1;
+      // let option2 = {
+      //   dislikes: newDislikeOfUser,
+      // };
+      // const resultOfUser = await updateUser(detail.userId, option2);
+      // console.log(resultOfUser);
 
-      const thisReaction = await getDislikeStatus(userId, id);
-      let thisReactionId = thisReaction[0].id;
+      const thisReaction = await getReactionStatus(userId, id);
+      let thisReactionId = thisReaction.reactionArticleId;
       const resultOfDeleteReaction = await deleteArticleReaction(
         thisReactionId
       );
       console.log(resultOfDeleteReaction);
-      const thisUserInfo = await getUserById(userId);
-      let newScoreOfThisUser = thisUserInfo[0].score_to_award - 1;
-      let option4 = {
-        score_to_award: newScoreOfThisUser
-      }
-      const resultOfScore = await updateUser(userId, option4);
-      console.log(resultOfScore);
+      // const thisUserInfo = await getUserById(userId);
+      // let newScoreOfThisUser = thisUserInfo[0].score_to_award - 1;
+      // let option4 = {
+      //   score_to_award: newScoreOfThisUser
+      // }
+      // const resultOfScore = await updateUser(userId, option4);
+      // console.log(resultOfScore);
     } else {
       setDislike(dislike + 1);
       setDislikeStatus((prev) => !prev);
 
       let newDislikeOfArticle = dislike + 1;
       let option1 = {
-        dislikes: newDislikeOfArticle,
+        articleId: id,
+        likes: like,
+        dislikes: newDislikeOfArticle
       };
-      const resultOfArticle = await updateArticle(id, option1);
+      const resultOfArticle = await updateArticle(option1);
       console.log(resultOfArticle);
 
-      const userInfo = await getUserById(detail.userId);
-      let newDislikeOfUser = userInfo[0].dislikes + 1;
-      let option2 = {
-        dislikes: newDislikeOfUser,
-      };
-      const resultOfUser = await updateUser(detail.userId, option2);
-      console.log(resultOfUser);
+      // const userInfo = await getUserById(detail.userId);
+      // let newDislikeOfUser = userInfo[0].dislikes + 1;
+      // let option2 = {
+      //   dislikes: newDislikeOfUser,
+      // };
+      // const resultOfUser = await updateUser(detail.userId, option2);
+      // console.log(resultOfUser);
 
       let option3 = {
-        user_id: parseInt(userId),
-        article_id: parseInt(id),
-        reaction_type: 2,
+        userId: userId,
+        articleId: id,
+        reactionType: false,
       };
       const thisReaction = await creatNewArticleReaction(option3);
       console.log(thisReaction);
-      const thisUserInfo = await getUserById(userId);
-      let newScoreOfThisUser = thisUserInfo[0].score_to_award + 1;
-      let option4 = {
-        score_to_award: newScoreOfThisUser
-      }
-      const resultOfScore = await updateUser(userId, option4);
-      console.log(resultOfScore);
+      // const thisUserInfo = await getUserById(userId);
+      // let newScoreOfThisUser = thisUserInfo[0].score_to_award + 1;
+      // let option4 = {
+      //   score_to_award: newScoreOfThisUser
+      // }
+      // const resultOfScore = await updateUser(userId, option4);
+      // console.log(resultOfScore);
     }
   };
   const [newComment, setNewComment] = useState({});
@@ -252,49 +266,48 @@ function ArticleDetail() {
 
   const handleComment = (e) => {
     e.preventDefault();
-    const commentDate = getNowDate();
+
 
     let options = {
       ...newComment,
-      article_id: parseInt(id),
-      user_id: parseInt(userId),
-      comment_time: commentDate,
-      likes: 0,
-      dislikes: 0,
+      articleId: id,
+      userId: userId
     };
 
     const fetchApi = async () => {
       const resultOfNewComment = await creatNewComment(options);
+      console.log(resultOfNewComment);
       setComments([...comments, resultOfNewComment]);
     };
     fetchApi();
 
-    const updateScoreOfThisUser = async () => {
-      const thisUserInfo = await getUserById(userId);
-      let newScoreOfThisUser = thisUserInfo[0].score_to_award + 2;
-      let option4 = {
-        score_to_award: newScoreOfThisUser
-      }
-      const resultOfScore = await updateUser(userId, option4);
-      console.log(resultOfScore);
-    }
-    updateScoreOfThisUser();
+    // const updateScoreOfThisUser = async () => {
+    //   const thisUserInfo = await getUserById(userId);
+    //   let newScoreOfThisUser = thisUserInfo[0].score_to_award + 2;
+    //   let option4 = {
+    //     score_to_award: newScoreOfThisUser
+    //   }
+    //   const resultOfScore = await updateUser(userId, option4);
+    //   console.log(resultOfScore);
+    // }
+    // updateScoreOfThisUser();
   };
 
   const handleDeleteComment = async (id) => {
-    const resultOfDelete = await deleteComment(id);
+    
+    const resultOfDelete = await deleteComment(userId, id);
     if (resultOfDelete) {
-      const updatedComments = comments.filter((comment) => comment.id !== id);
+      const updatedComments = comments.filter((comment) => comment.commentId !== id);
       setComments(updatedComments);
     }
 
-    const thisUserInfo = await getUserById(userId);
-      let newScoreOfThisUser = thisUserInfo[0].score_to_award - 2;
-      let option4 = {
-        score_to_award: newScoreOfThisUser
-      }
-      const resultOfScore = await updateUser(userId, option4);
-      console.log(resultOfScore);
+    // const thisUserInfo = await getUserById(userId);
+    //   let newScoreOfThisUser = thisUserInfo[0].score_to_award - 2;
+    //   let option4 = {
+    //     score_to_award: newScoreOfThisUser
+    //   }
+    //   const resultOfScore = await updateUser(userId, option4);
+    //   console.log(resultOfScore);
   };
 
   return (
@@ -364,31 +377,31 @@ function ArticleDetail() {
             {userComment.length > 0 && (
               <div className="detail__comment--list">
                 {userComment.map((item) => (
-                  <div key={item.id} className="detail__comment--box">
+                  <div key={item.commentId} className="detail__comment--box">
                     <div className="detail__comment--info">
                       {/* {userComment.length > 0 && (
                         <> */}
                       <div className="detail__comment--avt">
-                        <img src={item.user.image} alt="" />
+                        <img src={item.user.avatar_image_path} alt="" />
                       </div>
                       <div className="detail__comment--username">
-                        {item.user.fullName}
+                        {item.user.full_name}
                       </div>
                       <div className="detail__comment--date">
-                        {item.comment_time}
+                        {item.commentTime}
                       </div>
                       {/* </>
                       )} */}
                     </div>
                     <div className="detail__comment--content">
                       <div className="detail__comment--desc">
-                        {item.comment_description}
+                        {item.commentContent}
                       </div>
                       <div className="detail__comment--del">
-                        {item.user_id === parseInt(userId) ? (
+                        {item.userId === parseInt(userId) ? (
                           <>
                             <button
-                              onClick={() => handleDeleteComment(item.id)}
+                              onClick={() => handleDeleteComment(item.commentId)}
                             >
                               <FaTrashAlt />
                             </button>
@@ -417,7 +430,7 @@ function ArticleDetail() {
                   placeholder="Add a comments"
                   cols={80}
                   rows={2}
-                  name="comment_description"
+                  name="commentContent"
                   onChange={handleChange}
                 ></textarea>
                 <button className="button button-main">Đăng</button>

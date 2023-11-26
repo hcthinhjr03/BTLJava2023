@@ -20,7 +20,7 @@ export const getUser = async (options) => {
 }
 
 export const getUserById = async (id) => {
-  const result = await get(`users?id=${id}`);
+  const result = await get(`getUserById/${id}`);
   return result;
 }
 

@@ -67,7 +67,7 @@ function Home() {
         </div>
         <Slider {...settingsArticle}>
           {currentArticles.map((item) => (
-            <div key={item.id}>
+            <div key={item.articleId}>
               {/* <Link to={`/article/${item.id}`}> */}
               <img src={item.image} alt="" />
               <h2>{item.articleName}</h2>
@@ -102,7 +102,7 @@ function Home() {
         </div>
         <Slider {...settingsProduct}>
           {currentProducts.map((item) => (
-            <div key={item.id}>
+            <div key={item.product_id}>
               <div className="products__box">
                 <div className="products__image">
                   <img src={item.thumbnail} alt={item.title} />

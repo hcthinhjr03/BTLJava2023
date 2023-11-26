@@ -111,46 +111,37 @@ function Article() {
           <option def="true" value="default">
             All
           </option>
-          {/* <option value="math">Math</option>
-          <option value="literature">Literature</option>
-          <option value="history">History</option>
-          <option value="physics">Physics</option>
-        <option value="biology">Biology</option> */}
-          
-          <option>V-League</option>
-          <option>Scout cầu thủ trẻ</option>
+        
+          <option value="qa">Q&A</option>
+          <option value="vleague">V-League</option>
+          <option value="scout">Scout cầu thủ trẻ</option>
           <optgroup label="League">
-            <option>EPL</option>
-            <option>LaLiga</option>
-            <option>Serie A</option>
-            <option>Bundesliga</option>
-            <option>League 1</option>
-            <option>Another</option>
+            <option value="epl">EPL</option>
+            <option value="laliga">LaLiga</option>
+            <option value="seriea">Serie A</option>
+            <option value="bundesliga">Bundesliga</option>
+            <option value="league1">League 1</option>
+            <option value="other">Another</option>
           </optgroup>
           <optgroup label="Cup Châu Âu">
-            <option>C1</option>
-            <option>C2</option>
-            <option>C3</option>
-          </optgroup>
-          <optgroup label="Cup Châu Âu">
-            <option>C1</option>
-            <option>C2</option>
-            <option>C3</option>
+            <option value="c1">C1</option>
+            <option value="c2">C2</option>
+            <option value="c3">C3</option>
           </optgroup>
           <optgroup label="Đội tuyển quốc gia">
-            <option>Việt Nam</option>
-            <option>Đội tuyển khác</option>
+            <option value="vn">Việt Nam</option>
+            <option value="national">Đội tuyển khác</option>
           </optgroup>
           <optgroup label="Chuyển nhượng">
-            <option>Bóng đá Việt Nam</option>
-            <option>Bóng đá ngoại</option>
+            <option value="transfer_vn">Bóng đá Việt Nam</option>
+            <option value="transfer">Bóng đá ngoại</option>
           </optgroup>
         </select>
       </div>
       {article.length > 0 && (
         <div className="inner-wrap">
           {currentArticles.map((item) => (
-            <div className="inner-box" key={item.id}>
+            <div className="inner-box" key={item.articleId}>
               <div className="inner-image">
                 <img src={item.image} alt="" />
               </div>
