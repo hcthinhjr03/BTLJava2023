@@ -47,8 +47,8 @@ function ProductItem(props) {
           </div>
           <div className="product__content">
             <h3 className="product__title">{item.product_name}</h3>
-            <div className="product__price-new">{priceNew}$</div>
-            <div className="product__price-old">{item.price}$</div>
+            <div className="product__price-new">{priceNew}đ</div>
+            <div className="product__price-old">{item.price}đ</div>
           </div>
           <div className="product__percent">-{item.discounted}%</div>
           <div className="product__button">

@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
-import { createHasVoucher, getHasVoucherWithVoucher, getVoucher } from "../../services/productsService";
+import { createHasVoucher, getVoucher } from "../../services/productsService";
 import "./Gift.scss";
 import { getCookie } from "../../helpers/cookie";
-import { getUserById, updateScoreToAward } from "../../services/usersService";
+import { getUserById, updateThisUserLike } from "../../services/usersService";
+import Swal from "sweetalert2";
 
 function Gift() {
-  const userId = getCookie("id");
+  const userId = getCookie("user_id");
   const [vouchers, setVouchers] = useState([]);
   const [score, setScore] = useState(0);
 
@@ -20,7 +21,7 @@ function Gift() {
   useEffect(() => {
     const getUser = async () => {
       const result = await getUserById(userId);
-      setScore(result[0].score_to_award);
+      setScore(result.score_to_award);
     };
     getUser();
   }, [userId]);
@@ -28,41 +29,44 @@ function Gift() {
 
   const handleChange = (voucherId, discount_amount) => {
     if (score < discount_amount) {
-      alert("Bạn không đủ điểm để đổi");
+      Swal.fire({
+        title: 'Bạn không đủ điểm để đổi',
+        icon: 'error',
+        confirmButtonText: 'OK'
+      })
+      // alert("Bạn không đủ điểm để đổi");
     } else {
 
       let option1 = {
-        score_to_award: score - discount_amount,
+        user_id: userId,
+        numberlikes: -discount_amount,
       };
 
       const updateScore = async () => {
-          const result = await updateScoreToAward(userId, option1);
+          const result = await updateThisUserLike(option1);
           if(result){
-            alert("Đổi thành công!")
+            Swal.fire({
+              title: 'Đổi thành công!',
+              icon: 'success',
+              confirmButtonText: 'OK'
+            })
+            // alert("Đổi thành công!")
           }
       }
       let option2 = {
-        user_id: parseInt(userId),
-        voucher_id: parseInt(voucherId),
-        expiration_date: "26/07/2030"
+        user_id: userId,
+        voucher_id: voucherId
       }
 
       const createNewHasVoucher = async () => {
         const result = await createHasVoucher(option2);
-        console.log(result);
-      }
-
-      const checkHasVoucher = async () => {
-        const result = await getHasVoucherWithVoucher(userId, voucherId);
-        if(result.length > 0){
-            alert("Bạn đã sở hữu phiếu giảm giá này")
-        } else {
-            setScore(score - discount_amount);
-            updateScore();
-            createNewHasVoucher();
+        if(result){
+          setScore(score - discount_amount);
+          updateScore();
         }
-      }
-      checkHasVoucher();
+      }     
+      createNewHasVoucher();
+  
     }
   };
 
@@ -74,12 +78,12 @@ function Gift() {
           <div className="gift__info">Số điểm hiện tại: {score}</div>
           <div className="gift__list">
             {vouchers.map((item) => (
-              <div className="gift__box" key={item.id}>
+              <div className="gift__box" key={item.voucher_id}>
                 <div className="gift__desc">
                   Phiếu giảm giá {item.discount_amount}%
                 </div>
                 <div className="gift__btn">
-                  <button onClick={() => handleChange(item.id, item.discount_amount)}>
+                  <button onClick={() => handleChange(item.voucher_id, item.discount_amount)}>
                     Đổi
                   </button>
                 </div>

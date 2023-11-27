@@ -1,7 +1,7 @@
 import { del, get, patch, post } from "../utils/request";
 
 export const getAllUser = async () => {
-  const result = await get(`users`);
+  const result = await get(`ProcessGetAllUsers`);
   return result;
 }
 
@@ -25,12 +25,12 @@ export const getUserById = async (id) => {
 }
 
 export const createUser = async (options) => {
-  const result = await post(`users`, options);
+  const result = await post(`ProcessRegister`, options);
   return result;
 };
 
-export const updateUser = async (id, options) => {
-  const result = await patch(`users/${id}`, options);
+export const updateUser = async (options) => {
+  const result = await patch(`ProcessUpdateInformation`, options);
   return result;
 }
 
@@ -84,8 +84,8 @@ export const creatEmail = async (options) => {
   return result;
 }
 
-export const getEmail = async (userId) => {
-  const result = await get(`emails?user_id=${userId}`);
+export const getEmail = async (options) => {
+  const result = await post(`ProcessGetEmail`, options);
   return result;
 }
 

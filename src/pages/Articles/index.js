@@ -2,8 +2,8 @@ import Swal from 'sweetalert2'
 import { useEffect, useState } from "react";
 import "./article.scss";
 import {
-  getApprovedArticle,
   getArticleByCategory,
+  getNewestArticle,
 } from "../../services/articlesService";
 import { FaHeart, FaThumbsDown, FaFlag } from "react-icons/fa";
 import "../../SCSS/base.scss";
@@ -26,7 +26,7 @@ function Article() {
   useEffect(() => {
     const fetchApi = async () => {
       if (category === "" || category === "default") {
-        const result = await getApprovedArticle();
+        const result = await getNewestArticle();
         setArticle(result);
       } else {
         const result = await getArticleByCategory(category);

@@ -21,7 +21,7 @@ export const getHasVoucherWithVoucher = async (userId, voucherId) => {
 }
 
 export const createHasVoucher = async (options) => {
-  const result = await post(`has_vouchers`, options);
+  const result = await post(`product/hasvoucher`, options);
   return result;
 }
 
@@ -31,7 +31,7 @@ export const getVoucherById = async (id) => {
 }
 
 export const getVoucher = async () => {
-  const result = await get(`vouchers`);
+  const result = await get(`product/voucher/getallvoucher`);
   return result;
 }
 

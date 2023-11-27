@@ -105,11 +105,11 @@ function Home() {
             <div key={item.product_id}>
               <div className="products__box">
                 <div className="products__image">
-                  <img src={item.thumbnail} alt={item.title} />
+                  <img src={item.imagePath} alt={item.product_name} />
                 </div>
                 <div className="products__content">
-                  <h3 className="products__title">{item.name}</h3>
-                  <div className="products__price-old">{item.price}$</div>
+                  <h3 className="products__title">{item.product_name}</h3>
+                  <div className="products__price-old">{item.price}đ</div>
                 </div>
               </div>
             </div>

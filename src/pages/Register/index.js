@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
-import { generateToken } from "../../helpers/generateToken";
 import * as users from "../../services/usersService";
 import "./register.scss";
+import Swal from "sweetalert2";
 
 function Register() {
   const navigate = useNavigate();
@@ -14,36 +14,45 @@ function Register() {
     const gender = e.target.elements.gender.value;
     const username = e.target.elements.username.value;
     const password = e.target.elements.password.value;
-    const token = generateToken();
+    const email = e.target.elements.email.value;
 
     const options = {
-      fullName: fullName,
-      username: username,
-      password: password,
-      token: token,
-      role: 0,
-      dateOfBirth: dateOfBirth,
-      gender: gender,
-      score_to_award: 0,
-      // image: "",
-      // address: "",
-      // date_of_birth: "",
-      // favor_fc: "",
-      // likes: 0,
-      // dislikes: 0,
-      // score_to_award: 0,
+      full_name: fullName,
+      user_name: username,
+      pass_word: password,
+      date_of_birth: dateOfBirth,
+      gender: gender === 1 ? "true" : "false",
+      email: email
     };
 
-    const checkExist = await users.getUser(username);
+    console.log(options);
 
-    if (checkExist.length > 0) {
-      alert("Tài khoản đã tồn tại!");
+    const processRegister = await users.createUser(options);
+
+    console.log(processRegister);
+    if(processRegister.VALID === 1){
+      Swal.fire({
+        title: 'Đăng ký thành công!',
+        icon: 'success',
+        confirmButtonText: 'OK'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          navigate("/login");
+        } 
+      });
     } else {
-      const result = await users.createUser(options);
-      if (result) {
-        navigate("/login");
+      for(let key in processRegister){
+        if(processRegister[key] === 1){
+          Swal.fire({
+            title: (`${key}`),
+            icon: 'error',
+            confirmButtonText: 'OK'
+          })
+          break;
+        }
       }
     }
+
   };
 
   return (
@@ -76,6 +85,13 @@ function Register() {
               placeholder="Full Name"
               required
             />
+            <label>Email:</label>
+                <input
+                  className="register__input"
+                  type="email"
+                  name="email"
+                  placeholder="Email"
+                />
             <label>Gender:</label>
             <select name="gender" className="register__select">
               <option value="1">Nam</option>
@@ -87,7 +103,7 @@ function Register() {
               className="register__input"
               type="text"
               name="dateOfBirth"
-              placeholder="Date of birth"
+              placeholder="Date of birth: dd/mm/yyyy"
               required
             />
 

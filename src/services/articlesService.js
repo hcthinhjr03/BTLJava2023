@@ -15,6 +15,11 @@ export const getApprovedArticle = async () => {
     return result;
 }
 
+export const getNewestArticle = async () => {
+    const result = await get(`article?sortBy=newest`);
+    return result;
+}
+
 export const getArticleByCategory = async (category) => {
     const result = await get(`article?category=${category}`);
     return result;

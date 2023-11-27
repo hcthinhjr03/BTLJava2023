@@ -1,12 +1,11 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   deleteEmail,
-  deletePhone,
   deleteUser,
   getAllUser,
   getCommentsOfUser,
   getEmail,
-  getPhone,
   getReactionsOfUser,
   getVouchersOfUser,
   updateUser,
@@ -22,7 +21,8 @@ function ManageUsers() {
   const [users, setUsers] = useState([]);
   const [update, setUpdate] = useState(false);
   const [formData, setFormData] = useState({});
-  const [values, setValues] = useState({});
+  //const [values, setValues] = useState({});
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -32,31 +32,64 @@ function ManageUsers() {
     fetchUsers();
   }, []);
 
-  const handleChange = (e) => {
-    setValues((values) => ({
-      ...values,
-      [e.target.name]: e.target.value,
-    }));
-  };
+  // const handleChange = (e) => {
+  //   setValues((values) => ({
+  //     ...values,
+  //     [e.target.name]: e.target.value,
+  //   }));
+  // };
 
   const handleOpenUpdate = (item) => {
     setFormData(item);
     setUpdate(true);
   };
 
-  console.log(formData);
   const handleQuitUpdate = () => {
     setUpdate(false);
   };
 
-  const handleUpdate = async (userId) => {
+  const handleUpdate = async (e, userId) => {
+    e.preventDefault();
+    let optionEmail = {
+      user_id: userId
+    }
+
+    const resultEmail = await getEmail(optionEmail);
+
+    const full_name = e.target.elements.full_name.value;
+    const user_name = e.target.elements.user_name.value;
+    const date_of_birth = e.target.elements.date_of_birth.value;
+    const user_role = e.target.elements.user_role.value;
+    //const gender = e.target.elements.gender.value;
+    const score_to_award = e.target.elements.score_to_award.value;
+
     let options = {
-      ...values,
+      // ...values,
+      user_id: formData.user_id,
+      detail_position: formData.detail_position,
+      avatar_image_path: formData.avatar_image_path,
+      favor_fc: formData.Favor_fc,
+      email : resultEmail.email,
+      phone_number : "123456789",
+      country : "",
+      city : "",
+      district : "",
+      description_text : "",
+      full_name: full_name,
+      user_name: user_name,
+      date_of_birth: date_of_birth,
+      user_role: user_role,
+      gender: formData.gender,
+      score_to_award: score_to_award
     };
-    const result = await updateUser(userId, options);
+
+    console.log(options);
+
+    const result = await updateUser(options);
     if (result) {
       setUpdate(false);
-      setValues({});
+      // setValues({});
+      navigate("/private/admin");
     }
   };
 
@@ -87,9 +120,9 @@ function ManageUsers() {
     const delEmail = await deleteEmail(getEmailToDelete[0].id);
     console.log(delEmail);
 
-    const getPhoneToDelete = await getPhone(userId);
-    const delPhone = await deletePhone(getPhoneToDelete[0].id);
-    console.log(delPhone);
+    // const getPhoneToDelete = await getPhone(userId);
+    // const delPhone = await deletePhone(getPhoneToDelete[0].id);
+    // console.log(delPhone);
 
     if (resultDeleteUser) {
       const updatedUsers = users.filter((user) => user.id !== userId);
@@ -115,7 +148,7 @@ function ManageUsers() {
                     <th>UserName</th>
                     <th>FullName</th>
                     <th>Date Of Birth</th>
-                    <th>Gender</th>
+                    {/* <th>Gender</th> */}
                     <th>Score</th>
                     <th>Update</th>
                     <th>Delete</th>
@@ -127,15 +160,15 @@ function ManageUsers() {
               <table>
                 <tbody>
                   {users.map((item) => (
-                    <tr key={item.id}>
-                      <td>{item.id}</td>
+                    <tr key={item.user_id}>
+                      <td>{item.user_id}</td>
                       <td>
-                        {item.role === 2 ? "Quản trị viên" : "Người dùng"}
+                        {item.user_role === 2 ? "Quản trị viên" : "Người dùng"}
                       </td>
-                      <td>{item.username}</td>
-                      <td>{item.fullName}</td>
-                      <td>{item.dateOfBirth}</td>
-                      <td>{parseInt(item.gender) === 1 ? "Nam" : "Nữ"}</td>
+                      <td>{item.user_name}</td>
+                      <td>{item.full_name}</td>
+                      <td>{item.date_of_birth}</td>
+                      {/* <td>{item.gender ? "Nam" : "Nữ"}</td> */}
                       <td>{item.score_to_award}</td>
                       <td>
                         <button onClick={() => handleOpenUpdate(item)}>
@@ -143,7 +176,7 @@ function ManageUsers() {
                         </button>
                       </td>
                       <td>
-                        <button onClick={() => handleDelete(item.id)}>
+                        <button onClick={() => handleDelete(item.user_id)}>
                           Xoá
                         </button>
                       </td>
@@ -171,17 +204,17 @@ function ManageUsers() {
             </button>
           </div>
           <div className="users__update--table">
-            <form onSubmit={() => handleUpdate(formData.id)}>
+            <form onSubmit={(e) => handleUpdate(e, formData.user_id)}>
               <table>
                 <tbody>
                   <tr>
                     <td>Username:</td>
                     <td>
                       <input
-                        onChange={handleChange}
+                        //onChange={handleChange}
                         type="text"
-                        name="username"
-                        defaultValue={formData.username}
+                        name="user_name"
+                        defaultValue={formData.user_name}
                       />
                     </td>
                   </tr>
@@ -189,10 +222,10 @@ function ManageUsers() {
                     <td>Role:</td>
                     <td>
                       <input
-                        onChange={handleChange}
+                        //onChange={handleChange}
                         type="text"
-                        name="role"
-                        defaultValue={formData.role}
+                        name="user_role"
+                        defaultValue={formData.user_role}
                       />
                     </td>
                   </tr>
@@ -200,10 +233,10 @@ function ManageUsers() {
                     <td>Fullname:</td>
                     <td>
                       <input
-                        onChange={handleChange}
+                        //onChange={handleChange}
                         type="text"
-                        name="fullName"
-                        defaultValue={formData.fullName}
+                        name="full_name"
+                        defaultValue={formData.full_name}
                       />
                     </td>
                   </tr>
@@ -211,18 +244,18 @@ function ManageUsers() {
                     <td>Date of birth:</td>
                     <td>
                       <input
-                        onChange={handleChange}
+                        //onChange={handleChange}
                         type="text"
-                        name="dateOfBirth"
-                        defaultValue={formData.dateOfBirth}
+                        name="date_of_birth"
+                        defaultValue={formData.date_of_birth}
                       />
                     </td>
                   </tr>
-                  <tr>
+                  {/* <tr>
                     <td>Gender:</td>
                     <td>
                       <select
-                        onChange={handleChange}
+                        //onChange={handleChange}
                         name="gender"
                         // value={formData.gender}
                       >
@@ -231,12 +264,12 @@ function ManageUsers() {
                         <option value="0">Nữ</option>
                       </select>
                     </td>
-                  </tr>
+                  </tr> */}
                   <tr>
                     <td>Score:</td>
                     <td>
                       <input
-                        onChange={handleChange}
+                        //onChange={handleChange}
                         type="text"
                         name="score_to_award"
                         defaultValue={formData.score_to_award}

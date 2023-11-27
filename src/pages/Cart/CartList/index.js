@@ -13,7 +13,6 @@ function CartList() {
   const userId = getCookie("user_id");
   const cart = useSelector((state) => state.cartReducer);
   const dispatch = useDispatch();
-  //const [hasVouchers, setHasVouchers] = useState([]);
   const [vouchers, setVouchers] = useState([]);
 
   useEffect(() => {
@@ -24,7 +23,6 @@ function CartList() {
     fetchHasVoucherOfUser();
   }, [userId]);
 
-  console.log(vouchers);
 
 
   // useEffect(() => {
@@ -109,7 +107,7 @@ function CartList() {
             )}
           </div>
           <div className="cart__total">
-            Tổng tiền: {total - ((total * discount) / 100).toFixed(0)}$
+            Tổng tiền: {total - ((total * discount) / 100).toFixed(0)}đ
           </div>
           <div className="cart__confirm">
             <button onClick={handleOrder}>Xác nhận đặt hàng</button>

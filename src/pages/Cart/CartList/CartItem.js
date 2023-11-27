@@ -36,10 +36,10 @@ function CartItem(props) {
                         {item.info.product_name}
                     </h3>
                     <div className="cart__price-new">
-                        {priceNew}$
+                        {priceNew}đ
                     </div>
                     <div className="cart__price-old">
-                        {item.info.price}$
+                        {item.info.price}đ
                     </div>
                 </div>
                 <div className="cart__quantity">
