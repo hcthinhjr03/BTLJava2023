@@ -50,12 +50,6 @@ function ManageProducts() {
     const creatNewProduct = async () => {
       const result = await createProduct(options);
       if (result) {
-        if (result.category) {
-          result.category = "Giay";
-        }
-        else {
-          result.category = "Ao";
-        }
         setProducts([...products, result]);
         setValues({});
         setCreate(false);
@@ -68,7 +62,7 @@ function ManageProducts() {
     const resultOfDelete = await deleteProduct(productId);
     if (resultOfDelete) {
       const updatedProducts = products.filter(
-        (product) => product.id !== productId
+        (product) => product.product_id !== productId
       );
       setProducts(updatedProducts);
     }
@@ -86,8 +80,9 @@ function ManageProducts() {
   const handleUpdate = async (productId) => {
     let options = {
       ...values,
+      product_id: productId
     };
-    const result = await updateProduct(productId, options);
+    const result = await updateProduct(options);
     if (result) {
       setUpdate(false);
       setValues({});
@@ -127,7 +122,7 @@ function ManageProducts() {
               <table>
                 <tbody>
                   {products.map((item) => (
-                    <tr key={item.id}>
+                    <tr key={item.product_id}>
                       <td>{item.product_id}</td>
                       <td>{item.product_name}</td>
                       <td>{item.category ? "Giay" : "Ao"}</td>
@@ -141,7 +136,7 @@ function ManageProducts() {
                         </button>
                       </td>
                       <td>
-                        <button onClick={() => handleDelete(item.id)}>
+                        <button onClick={() => handleDelete(item.product_id)}>
                           Xoá
                         </button>
                       </td>
@@ -243,7 +238,7 @@ function ManageProducts() {
             </button>
           </div>
           <div className="products__update--table">
-            <form onSubmit={() => handleUpdate(formData.id)}>
+            <form onSubmit={() => handleUpdate(formData.product_id)}>
               <table>
                 <tbody>
                   <tr>
@@ -252,8 +247,8 @@ function ManageProducts() {
                       <input
                         onChange={handleChange}
                         type="text"
-                        name="name"
-                        defaultValue={formData.name}
+                        name="product_name"
+                        defaultValue={formData.product_name}
                       />
                     </td>
                   </tr>
@@ -263,8 +258,8 @@ function ManageProducts() {
                       <input
                         onChange={handleChange}
                         type="text"
-                        name="thumbnail"
-                        defaultValue={formData.thumbnail}
+                        name="imagePath"
+                        defaultValue={formData.imagePath}
                       />
                     </td>
                   </tr>
@@ -274,11 +269,11 @@ function ManageProducts() {
                       <select
                         onChange={handleChange}
                         name="category"
-                        defaultValue={formData.category}
+                        
                       >
-                        <option value="smartphones">Smartphones</option>
-                        <option value="laptops">Laptops</option>
-                        <option value="mens-watches">Mens watches</option>
+                        <option>Select</option>
+                        <option value="0">Ao</option>
+                        <option value="1">Giay</option>
                       </select>
                     </td>
                   </tr>
@@ -310,8 +305,8 @@ function ManageProducts() {
                       <input
                         onChange={handleChange}
                         type="text"
-                        name="discount"
-                        defaultValue={formData.discount}
+                        name="discounted"
+                        defaultValue={formData.discounted}
                       />
                     </td>
                   </tr>

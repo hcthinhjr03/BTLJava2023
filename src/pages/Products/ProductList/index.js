@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import {
-  getProductList,
   getProductListByCategory,
 } from "../../../services/productsService";
 import ProductItem from "./ProductItem";
@@ -125,7 +124,7 @@ function ProductList() {
         <div>
           <div className="product__list">
             {currentProducts.map((item) => (
-              <ProductItem item={item} key={item.id} />
+              <ProductItem item={item} key={item.product_id} />
             ))}
           </div>
           <div className="inner-paginate">

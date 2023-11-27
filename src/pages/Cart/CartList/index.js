@@ -6,42 +6,44 @@ import { getCookie } from "../../../helpers/cookie.js";
 import { useEffect, useState } from "react";
 import {
   getHasVoucher,
-  getVoucherById,
+  
 } from "../../../services/productsService.js";
 
 function CartList() {
-  const userId = getCookie("id");
+  const userId = getCookie("user_id");
   const cart = useSelector((state) => state.cartReducer);
   const dispatch = useDispatch();
-  const [hasVouchers, setHasVouchers] = useState([]);
-
-  useEffect(() => {
-    const fetchHasVoucher = async () => {
-      const result = await getHasVoucher(userId);
-      setHasVouchers(result);
-    };
-    fetchHasVoucher();
-  }, [userId]);
-
+  //const [hasVouchers, setHasVouchers] = useState([]);
   const [vouchers, setVouchers] = useState([]);
 
   useEffect(() => {
-    const fetchVoucher = async () => {
-      const hasVoucherWithVoucher = await Promise.all(
-        hasVouchers.map(async (hasVoucher) => {
-          const voucherData = await getVoucherById(hasVoucher.voucher_id);
-          return { ...hasVoucher, voucher: voucherData[0] };
-        })
-      );
-      setVouchers(hasVoucherWithVoucher);
+    const fetchHasVoucherOfUser = async () => {
+      const result = await getHasVoucher(userId);
+      setVouchers(result);
     };
-    fetchVoucher();
-  }, [hasVouchers]);
+    fetchHasVoucherOfUser();
+  }, [userId]);
+
+  console.log(vouchers);
+
+
+  // useEffect(() => {
+  //   const fetchVoucher = async () => {
+  //     const hasVoucherWithVoucher = await Promise.all(
+  //       hasVouchers.map(async (hasVoucher) => {
+  //         const voucherData = await getVoucherById(hasVoucher.voucher_id);
+  //         return { ...hasVoucher, voucher: voucherData[0] };
+  //       })
+  //     );
+  //     setVouchers(hasVoucherWithVoucher);
+  //   };
+  //   fetchVoucher();
+  // }, [hasVouchers]);
 
   const total = cart.reduce((sum, item) => {
     const priceNew = (
       item.info.price *
-      ((100 - item.info.discount) / 100)
+      ((100 - item.info.discounted) / 100)
     ).toFixed(0);
     return sum + priceNew * item.quantity;
   }, 0);
@@ -75,7 +77,7 @@ function CartList() {
           </div>
           <div className="cart__list">
             {cart.map((item) => (
-              <CartItem key={item.id} item={item} />
+              <CartItem key={item.product_id} item={item} />
             ))}
           </div>
           <div className="cart__voucher">
@@ -86,15 +88,15 @@ function CartList() {
                   <button
                     className="cart__discount"
                     style={
-                      isActive === item.id
+                      isActive === item.has_voucher_id
                         ? { color: "#fff",
                             backgroundColor: "#6a38ff" }
                         : { background: "#212529" }
                     }
                     onClick={() =>
-                      handleDiscount(item.id, item.voucher.discount_amount)
+                      handleDiscount(item.has_voucher_id, item.voucher.discount_amount)
                     }
-                    key={item.id}
+                    key={item.has_voucher_id}
                   >
                     Giảm {item.voucher.discount_amount}%
                   </button>

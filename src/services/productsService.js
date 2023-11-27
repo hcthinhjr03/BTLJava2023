@@ -11,7 +11,7 @@ export const getProductListByCategory = async (options) => {
 }
 
 export const getHasVoucher = async (userId) => {
-  const result = await get(`has_vouchers?user_id=${userId}`);
+  const result = await get(`product/hasvoucher/getbyuser/${userId}`);
   return result;
 }
 
@@ -41,12 +41,12 @@ export const createProduct = async (options) => {
 }
 
 export const deleteProduct = async (id) => {
-  const result = await del(`products/${id}`);
+  const result = await del(`product/deleteById/${id}`);
   return result;
 }
 
-export const updateProduct = async (id, options) => {
-  const result = await patch(`products/${id}`, options);
+export const updateProduct = async (options) => {
+  const result = await patch(`product/editProduct`, options);
   return result;
 }
 

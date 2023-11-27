@@ -11,6 +11,8 @@ function ProductItem(props) {
   const authen = useSelector((state) => state.authenReducer);
   const cart = useSelector((state) => state.cartReducer);
 
+  console.log(cart);
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -28,10 +30,10 @@ function ProductItem(props) {
         }
       });
     } else {
-      if (cart.some((itemCart) => itemCart.id === item.id)) {
-        dispatch(updateItem(item.id, 1));
+      if (cart.some((itemCart) => itemCart.id === item.product_id)) {
+        dispatch(updateItem(item.product_id, 1));
       } else {
-        dispatch(add(item.id, item));
+        dispatch(add(item.product_id, item));
       }
     }
   };

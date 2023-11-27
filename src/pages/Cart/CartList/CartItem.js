@@ -7,7 +7,7 @@ function CartItem(props) {
     const { item } = props;
     const dispatch = useDispatch();
     const inputRef = useRef();
-    const priceNew = (item.info.price * ((100 - item.info.discount) / 100)).toFixed(0);
+    const priceNew = (item.info.price * ((100 - item.info.discounted) / 100)).toFixed(0);
 
     const handleDown = () => {
         if (item.quantity > 1) {
@@ -29,11 +29,11 @@ function CartItem(props) {
         <>
             <div className="cart__item">
                 <div className="cart__image">
-                    <img src={item.info.thumbnail} alt={item.info.title} />
+                    <img src={item.info.imagePath} alt={item.info.product_name} />
                 </div>
                 <div className="cart__content">
                     <h3 className="cart__title">
-                        {item.info.name}
+                        {item.info.product_name}
                     </h3>
                     <div className="cart__price-new">
                         {priceNew}$
