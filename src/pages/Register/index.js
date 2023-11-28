@@ -21,7 +21,7 @@ function Register() {
       user_name: username,
       pass_word: password,
       date_of_birth: dateOfBirth,
-      gender: gender === 1 ? "true" : "false",
+      gender: gender === '1' ? "true" : "false",
       email: email
     };
 

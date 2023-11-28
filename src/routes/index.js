@@ -17,6 +17,7 @@ import DashBoard from "../pages/Admin/Dashboard";
 import ManageUsers from "../pages/Admin/ManageUsers";
 import ManageArticles from "../pages/Admin/ManageArticles";
 import ManageProducts from "../pages/Admin/ManageProducts";
+import ManageOrders from "../pages/Admin/ManageOrders";
 
 export const routes = [
   {
@@ -96,6 +97,10 @@ export const routes = [
           {
             path: "products",
             element: <ManageProducts />
+          },
+          {
+            path: "orders",
+            element: <ManageOrders/>
           },
           {
             path: "*",

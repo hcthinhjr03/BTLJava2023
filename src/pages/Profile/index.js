@@ -56,26 +56,6 @@ function Profile() {
     const image = e.target.elements.image.value;
     const favor_fc = e.target.elements.favor_fc.value;
   
-    // const updatePhoneOptions = {
-    //   phone_number: new_phone_number,
-    // };
-
-    // const createPhoneOptions = {
-    //   phone_number: new_phone_number,
-    //   user_id: parseInt(id),
-    // };
-
-    // if (phone) {
-    //   const result = await updatePhone(phone.id, updatePhoneOptions);
-    //   if (result) {
-    //     navigate("/");
-    //   }
-    // } else {
-    //   const result = await creatPhone(createPhoneOptions);
-    //   if (result) {
-    //     navigate("/");
-    //   }
-    // }
 
     const options = {
       user_id: id,
@@ -96,9 +76,6 @@ function Profile() {
       user_role: user.user_role,
       score_to_award: user.score_to_award
     };
-
-    console.log(options);
-
 
     const result = await updateUser(options);
     if (result) {

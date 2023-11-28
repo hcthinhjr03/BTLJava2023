@@ -1,21 +1,12 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
-  deleteEmail,
-  deleteUser,
   getAllUser,
-  getCommentsOfUser,
   getEmail,
-  getReactionsOfUser,
-  getVouchersOfUser,
   updateUser,
 } from "../../../services/usersService";
 import "./ManageUsers.scss";
-import {
-  deleteArticleReaction,
-  deleteComment,
-} from "../../../services/articlesService";
-import { deleteHasVoucher } from "../../../services/productsService";
+
 
 function ManageUsers() {
   const [users, setUsers] = useState([]);
@@ -94,40 +85,40 @@ function ManageUsers() {
   };
 
   const handleDelete = async (userId) => {
-    const resultDeleteUser = await deleteUser(userId);
+    // const resultDeleteUser = await deleteUser(userId);
 
-    const getCommentsToDelete = await getCommentsOfUser(userId);
-    for (let i = 0; i < getCommentsToDelete.length; i++) {
-      const delComment = await deleteComment(getCommentsToDelete[i].id);
-      console.log(delComment);
-    }
+    // const getCommentsToDelete = await getCommentsOfUser(userId);
+    // for (let i = 0; i < getCommentsToDelete.length; i++) {
+    //   const delComment = await deleteComment(getCommentsToDelete[i].id);
+    //   console.log(delComment);
+    // }
 
-    const getReactionsToDelete = await getReactionsOfUser(userId);
-    for (let i = 0; i < getReactionsToDelete.length; i++) {
-      const delReaction = await deleteArticleReaction(
-        getReactionsToDelete[i].id
-      );
-      console.log(delReaction);
-    }
+    // const getReactionsToDelete = await getReactionsOfUser(userId);
+    // for (let i = 0; i < getReactionsToDelete.length; i++) {
+    //   const delReaction = await deleteArticleReaction(
+    //     getReactionsToDelete[i].id
+    //   );
+    //   console.log(delReaction);
+    // }
 
-    const getVouchersToDelete = await getVouchersOfUser(userId);
-    for (let i = 0; i < getVouchersToDelete.length; i++) {
-      const delVoucher = await deleteHasVoucher(getVouchersToDelete[i].id);
-      console.log(delVoucher);
-    }
+    // const getVouchersToDelete = await getVouchersOfUser(userId);
+    // for (let i = 0; i < getVouchersToDelete.length; i++) {
+    //   const delVoucher = await deleteHasVoucher(getVouchersToDelete[i].id);
+    //   console.log(delVoucher);
+    // }
 
-    const getEmailToDelete = await getEmail(userId);
-    const delEmail = await deleteEmail(getEmailToDelete[0].id);
-    console.log(delEmail);
+    // const getEmailToDelete = await getEmail(userId);
+    // const delEmail = await deleteEmail(getEmailToDelete[0].id);
+    // console.log(delEmail);
 
     // const getPhoneToDelete = await getPhone(userId);
     // const delPhone = await deletePhone(getPhoneToDelete[0].id);
     // console.log(delPhone);
 
-    if (resultDeleteUser) {
-      const updatedUsers = users.filter((user) => user.id !== userId);
-      setUsers(updatedUsers);
-    }
+    // if (resultDeleteUser) {
+    //   const updatedUsers = users.filter((user) => user.id !== userId);
+    //   setUsers(updatedUsers);
+    // }
   };
 
   return (

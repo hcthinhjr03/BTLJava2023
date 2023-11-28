@@ -7,12 +7,8 @@ import Swal from "sweetalert2";
 
 function ProductItem(props) {
   const { item } = props;
-
   const authen = useSelector((state) => state.authenReducer);
   const cart = useSelector((state) => state.cartReducer);
-
-  console.log(cart);
-
   const dispatch = useDispatch();
   const navigate = useNavigate();
 

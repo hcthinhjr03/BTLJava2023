@@ -50,7 +50,32 @@ export const updateProduct = async (options) => {
   return result;
 }
 
+// export const deleteHasVoucher = async (id) => {
+//   const result = await del(`has_vouchers/${id}`);
+//   return result;
+// }
+
+export const createOrder = async (options) => {
+  const result = await post(`product/createOrder`, options);
+  return result;
+}
+
+export const getAllOrder = async () => {
+  const result = await get(`product/getOrderAdmin`);
+  return result;
+}
+
+export const deleteOrder = async (orderId) => {
+  const result = await del(`product/deleteOrderById/${orderId}`);
+  return result;
+}
+
+export const approveOrder = async (options) => {
+  const result = await patch(`product/processOrder`, options);
+  return result;
+}
+
 export const deleteHasVoucher = async (id) => {
-  const result = await del(`has_vouchers/${id}`);
+  const result = await del(`product/hasvoucher/deletebyid/${id}`);
   return result;
 }

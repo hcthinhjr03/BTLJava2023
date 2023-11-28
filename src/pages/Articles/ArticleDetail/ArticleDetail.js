@@ -43,7 +43,8 @@ function ArticleDetail() {
       const resultOfReaction = await getReactionStatus(userId, id);
       console.log(resultOfReaction);
       if(resultOfReaction){
-        if (resultOfReaction.reaction_type) {
+        if (resultOfReaction.reationType === true) {
+          console.log("like");
           setLikeStatus(true);
           setDislikeStatus(false);
         } else {

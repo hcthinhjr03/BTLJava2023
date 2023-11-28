@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   createProduct,
   deleteProduct,
@@ -13,6 +14,7 @@ function ManageProducts() {
   const [update, setUpdate] = useState(false);
   const [values, setValues] = useState({});
   const [formData, setFormData] = useState({});
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -77,7 +79,8 @@ function ManageProducts() {
     setUpdate(false);
   };
 
-  const handleUpdate = async (productId) => {
+  const handleUpdate = async (e, productId) => {
+    e.preventDefault();
     let options = {
       ...values,
       product_id: productId
@@ -86,6 +89,7 @@ function ManageProducts() {
     if (result) {
       setUpdate(false);
       setValues({});
+      navigate("/private/admin");
     }
   };
 
@@ -238,7 +242,7 @@ function ManageProducts() {
             </button>
           </div>
           <div className="products__update--table">
-            <form onSubmit={() => handleUpdate(formData.product_id)}>
+            <form onSubmit={(e) => handleUpdate(e,formData.product_id)}>
               <table>
                 <tbody>
                   <tr>

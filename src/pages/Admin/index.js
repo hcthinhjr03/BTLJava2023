@@ -52,6 +52,10 @@ function Admin() {
                   <Link to="/private/admin/products">Products</Link>
                   <FaStore />
                 </li>
+                <li>
+                  <Link to="/private/admin/orders">Orders</Link>
+                  <FaStore />
+                </li>
                 <li style={{height: "400px"}}></li>
               </ul>
             </div>

@@ -115,15 +115,15 @@ function Dashboard() {
                 </thead>
                 <tbody>
                   {currentApprovedArticles.map((item) => (
-                    <>
+                  
                       <tr key={item.articleId}>
                         <td>{item.articleId}</td>
                         <td>{item.articleName}</td>
                         <td style={{ color: "blue" }}>{item.likes}</td>
                         <td style={{ color: "red" }}>{item.dislikes}</td>
                       </tr>
-                    </>
-                  ))}
+                    
+                 ))}
                 </tbody>
               </table>
             </div>
