@@ -4,6 +4,7 @@ import "../../../SCSS/base.scss";
 import { creatArticle } from "../../../services/articlesService";
 import { getCookie } from "../../../helpers/cookie";
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 function CreateArticle() {
   const [values, setValues] = useState({});
@@ -26,8 +27,16 @@ function CreateArticle() {
     const fetchApi = async () => {
       const result = await creatArticle(options);
       if (result) {
-        setValues({});
-        navigate("/article")
+        Swal.fire({
+          title: 'Đăng bài thành công! Bài viết của bạn sẽ sớm được duyệt!',
+          icon: 'success',
+          confirmButtonText: 'OK'
+        }).then((result) => {
+          if (result.isConfirmed) {      
+            setValues({});
+            navigate("/article")
+          } 
+        });
       }
     };
     fetchApi();

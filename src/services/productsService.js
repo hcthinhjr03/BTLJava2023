@@ -1,15 +1,27 @@
 import { del, get, patch, post } from "../utils/request"
 
 export const getProductList = async (options) => {
-    const result = await post("product/index", options);
-    return result;
+  const result = await post("product/index", options);
+  return result;
 }
-
 export const getProductListByCategory = async (options) => {
   const result = await post("product/index", options);
   return result;
 }
+export const createProduct = async (options) => {
+  const result = await post(`product/addProduct`, options);
+  return result;
+}
 
+export const deleteProduct = async (id) => {
+  const result = await del(`product/deleteById/${id}`);
+  return result;
+}
+
+export const updateProduct = async (options) => {
+  const result = await patch(`product/editProduct`, options);
+  return result;
+}
 export const getHasVoucher = async (userId) => {
   const result = await get(`product/hasvoucher/getbyuser/${userId}`);
   return result;
@@ -35,20 +47,7 @@ export const getVoucher = async () => {
   return result;
 }
 
-export const createProduct = async (options) => {
-  const result = await post(`product/addProduct`, options);
-  return result;
-}
 
-export const deleteProduct = async (id) => {
-  const result = await del(`product/deleteById/${id}`);
-  return result;
-}
-
-export const updateProduct = async (options) => {
-  const result = await patch(`product/editProduct`, options);
-  return result;
-}
 
 // export const deleteHasVoucher = async (id) => {
 //   const result = await del(`has_vouchers/${id}`);

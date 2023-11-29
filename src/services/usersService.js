@@ -1,18 +1,18 @@
 import { del, get, patch, post } from "../utils/request";
 
+
+// export const getUser = async (username, password = "") => {
+  //   let pass = "";
+  //   if(password !== "") {
+    //     pass = `&password=${password}`;
+    //   }
+    //   const result = await get(`users?username=${username}${pass}`);
+    //   return result;
+    // }
 export const getAllUser = async () => {
   const result = await get(`ProcessGetAllUsers`);
   return result;
 }
-
-// export const getUser = async (username, password = "") => {
-//   let pass = "";
-//   if(password !== "") {
-//     pass = `&password=${password}`;
-//   }
-//   const result = await get(`users?username=${username}${pass}`);
-//   return result;
-// }
 
 export const getUser = async (options) => {
   const result = await post(`ProcessLogin`, options);

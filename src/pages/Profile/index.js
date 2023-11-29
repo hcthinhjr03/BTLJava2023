@@ -7,6 +7,7 @@ import {
 } from "../../services/usersService";
 import "./profile.scss";
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 // import { useDispatch } from "react-redux";
 // import { checkAuthen } from "../../actions/authentication";
 //import Swal from "sweetalert2";
@@ -79,7 +80,15 @@ function Profile() {
 
     const result = await updateUser(options);
     if (result) {
-      navigate("/");
+      Swal.fire({
+        title: 'Cập nhật thông tin thành công!',
+        icon: 'success',
+        confirmButtonText: 'OK'
+      }).then((result) => {
+        if (result.isConfirmed) {      
+          navigate("/");      
+        } 
+      });
     }
   };
 

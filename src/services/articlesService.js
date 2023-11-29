@@ -4,14 +4,24 @@ export const getArticle = async () => {
     const result = await get(`article`);
     return result;
 }
-
 export const getOutstandingArticle = async () => {
     const result = await get(`article?featured=true`);
     return result;
 }
-
+export const getArticleById = async (id) => {
+    const result = await get(`article?id=${id}`);
+    return result;
+}
 export const getApprovedArticle = async () => {
     const result = await get(`article?accepted=true`);
+    return result;
+}
+export const creatArticle = async (options) => {
+    const result = await post(`article`, options);
+    return result;
+}
+export const deleteArticle = async (userId, articleId) => {
+    const result = await del(`article?userId=${userId}&articleId=${articleId}`);
     return result;
 }
 
@@ -30,10 +40,6 @@ export const getNonApprovedArticle = async (userId) => {
     return result;
 }
 
-export const getArticleById = async (id) => {
-    const result = await get(`article?id=${id}`);
-    return result;
-}
 
 
 export const getApprovedArticleByCategory = async (category) => {
@@ -41,10 +47,6 @@ export const getApprovedArticleByCategory = async (category) => {
     return result;
 }
 
-export const creatArticle = async (options) => {
-    const result = await post(`article`, options);
-    return result;
-}
 
 export const getReactionStatus = async (userId, articleId) => {
     const result = await get(`reaction_article?articleId=${articleId}&userId=${userId}`);
@@ -97,10 +99,6 @@ export const deleteAllReactionsOfArticle = async (articleId) => {
     return result;
 }
 
-export const deleteArticle = async (userId, articleId) => {
-    const result = await del(`article?userId=${userId}&articleId=${articleId}`);
-    return result;
-}
 
 export const updateArticle = async (options) => {
     const result = await patch(`article`, options);
