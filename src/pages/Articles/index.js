@@ -36,8 +36,6 @@ function Article() {
     fetchApi();
   }, [currentPage, category]);
 
-  console.log(article);
-
   const indexOfLastArticle = currentPage * articlesPerPage;
   const indexOfFirstArticle = indexOfLastArticle - articlesPerPage;
   const currentArticles = article.slice(

@@ -25,7 +25,6 @@ function CreateArticle() {
     };
     const fetchApi = async () => {
       const result = await creatArticle(options);
-      console.log(result);
       if (result) {
         setValues({});
         navigate("/article")

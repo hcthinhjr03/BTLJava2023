@@ -73,8 +73,6 @@ function CartList() {
     setIsOpen(true);
   }
 
-
-
   function closeModal() {
     setIsOpen(false);
   }
@@ -82,8 +80,6 @@ function CartList() {
   const handleOrder = () => {
     openModal();
   }
-
-  console.log(vouchers);
 
   return (
     <>

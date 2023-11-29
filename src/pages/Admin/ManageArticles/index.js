@@ -88,19 +88,6 @@ function ManageArticles() {
     console.log(deleteAllReactions);
     
     const resultDeleteArticle = await deleteArticle(userId, articleId);
-    // for (let i = 0; i < getCommentsToDelete.length; i++) {
-    //   const delComment = await deleteComment(getCommentsToDelete[i].id);
-    //   console.log(delComment);
-    // }
-
-
-    // const getReactionsToDelete = await getArticleReactions(articleId);
-    // for (let i = 0; i < getReactionsToDelete.length; i++) {
-    //   const delReaction = await deleteArticleReaction(
-    //     getReactionsToDelete[i].id
-    //   );
-    //   console.log(delReaction);
-    // }
 
     if (resultDeleteArticle) {
       Swal.fire({

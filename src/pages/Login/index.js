@@ -18,10 +18,7 @@ function Login() {
       user_name: username,
       pass_word: password
     }
-
-    console.log(loginOptions);
     const data = await users.getUser(loginOptions);
-    console.log(data);
     if (data.token === "VALID") {
       const time = 1;
       setCookie("user_id", data.id, time);

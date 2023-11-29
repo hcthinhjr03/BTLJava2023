@@ -25,11 +25,8 @@ function Register() {
       email: email
     };
 
-    console.log(options);
-
     const processRegister = await users.createUser(options);
 
-    console.log(processRegister);
     if(processRegister.VALID === 1){
       Swal.fire({
         title: 'Đăng ký thành công!',
