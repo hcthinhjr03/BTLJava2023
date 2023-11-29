@@ -41,10 +41,8 @@ function ArticleDetail() {
   useEffect(() => {
     const fetchApi = async () => {
       const resultOfReaction = await getReactionStatus(userId, id);
-      console.log(resultOfReaction);
       if(resultOfReaction){
         if (resultOfReaction.reationType === true) {
-          console.log("like");
           setLikeStatus(true);
           setDislikeStatus(false);
         } else {
@@ -52,12 +50,6 @@ function ArticleDetail() {
           setLikeStatus(false);
         }
       }
-      // const resultOfDislike = await getDislikeStatus(userId, id);
-      // if (resultOfDislike.length > 0) {
-      //   setDislikeStatus(true);
-      // } else {
-      //   setDislikeStatus(false);
-      // }
     };
     fetchApi();
   }, [userId, id]);
@@ -65,7 +57,6 @@ function ArticleDetail() {
   useEffect(() => {
     const fetchApi = async () => {
       const resultOfComments = await getArticleComments(id);
-      console.log(resultOfComments);
       setComments(resultOfComments);
     };
     fetchApi();
@@ -93,7 +84,6 @@ function ArticleDetail() {
           return { ...comment, user: userData };
         })
       );
-      console.log(commentsWithUsers);
       setUserComment(commentsWithUsers);
     };
 
@@ -275,7 +265,6 @@ function ArticleDetail() {
 
     const fetchApi = async () => {
       const resultOfNewComment = await creatNewComment(options);
-      console.log(resultOfNewComment);
       setComments([...comments, resultOfNewComment]);
     };
     fetchApi();

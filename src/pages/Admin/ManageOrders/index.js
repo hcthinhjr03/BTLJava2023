@@ -18,8 +18,6 @@ function ManageOrders() {
         fetchOrders();
     }, [])
 
-    console.log(orders);
-
     const handleApprove = async (orderId) => {
         const options = {
             user_id: userId,

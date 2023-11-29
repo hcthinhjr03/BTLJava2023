@@ -74,8 +74,6 @@ function ManageUsers() {
       score_to_award: score_to_award
     };
 
-    console.log(options);
-
     const result = await updateUser(options);
     if (result) {
       setUpdate(false);
@@ -85,6 +83,8 @@ function ManageUsers() {
   };
 
   const handleDelete = async (userId) => {
+    // Updating........
+
     // const resultDeleteUser = await deleteUser(userId);
 
     // const getCommentsToDelete = await getCommentsOfUser(userId);
